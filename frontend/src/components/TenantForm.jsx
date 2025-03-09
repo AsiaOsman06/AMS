@@ -9,7 +9,7 @@ const TenantForm = ({ setTenants }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/api/tenants", { name, email, phone })
+      .post("http://localhost:5002/api/tenants", { name, email, phone })
       .then(() => {
         setTenants((prevTenants) => [...prevTenants, { name, email, phone }]);
         setName("");

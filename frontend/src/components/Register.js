@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(""); // ✅ Added phone state
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -12,24 +13,41 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!name || !email || !phone || !password) {
+      setError("All fields are required");
+      return;
+    }
+
+    //sending inputs to the backend
     try {
-      await axios.post("http://localhost:5000/api/register", {
+      await axios.post("http://localhost:5002/api/register", {
         name,
         email,
+        phone,
         password,
       });
-      setSuccess("Registration successful! You can now log in.");
-      setError("");
+
+      //this is working when you register
+      setSuccess("Registration successful! Redirecting...");
       setTimeout(() => navigate("/login"), 1500);
+
+      // Clear input fields
+      setName("");
+      setEmail("");
+      setPhone("");
+      setPassword("");
     } catch (error) {
-      setError("Registration failed. Try again.");
+      setError(error.response?.data?.error || "Registration failed. Try again.");
     }
   };
 
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-semibold mb-4">Register</h2>
+        <h2 className="text-2xl font-semibold mb-4">REGISTER</h2>
         {error && <p className="text-red-500">{error}</p>}
         {success && <p className="text-green-500">{success}</p>}
         <form onSubmit={handleRegister}>
@@ -46,6 +64,14 @@ const Register = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="border p-2 w-full mb-3"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             className="border p-2 w-full mb-3"
             required
           />
