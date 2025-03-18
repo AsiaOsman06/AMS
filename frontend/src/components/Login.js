@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./Login.css"; // ✅ Import the CSS file
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ const Login = ({ setUser }) => {
     try {
       const response = await axios.post("http://localhost:5002/api/login", {
         email,
-        password,
+        password
       });
       setUser(response.data.user);
       navigate("/");
@@ -23,17 +24,17 @@ const Login = ({ setUser }) => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-semibold mb-4">Login</h2>
-        {error && <p className="text-red-500">{error}</p>}
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Login</h2>
+        {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleLogin}>
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border p-2 w-full mb-3"
+            className="login-input"
             required
           />
           <input
@@ -41,13 +42,10 @@ const Login = ({ setUser }) => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border p-2 w-full mb-3"
+            className="login-input"
             required
           />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white p-2 w-full rounded-md"
-          >
+          <button type="submit" className="login-btn">
             Login
           </button>
         </form>

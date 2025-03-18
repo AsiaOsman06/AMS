@@ -1,17 +1,16 @@
 import React from "react";
+import "./TenantList.css"; // ✅ Import the CSS file
 
 const TenantList = ({ tenants }) => {
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">Tenants</h2>
+    <div className="tenant-list-container">
+      <h2 className="tenant-list-title">Tenants</h2>
       <ul>
         {tenants.map((tenant) => (
-          <li key={tenant.id} className="mb-2">
-            <div className="bg-gray-100 p-4 rounded-md">
-              <h3 className="text-xl">{tenant.name}</h3>
-              <p>{tenant.email}</p>
-              <p>{tenant.phone}</p>
-            </div>
+          <li key={tenant.id} className="tenant-item">
+            <h3 className="tenant-name">{tenant.name}</h3>
+            <p className="tenant-contact">{tenant.email}</p>
+            <p className="tenant-contact">{tenant.phone}</p>
           </li>
         ))}
       </ul>

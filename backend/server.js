@@ -14,8 +14,8 @@ const app = express();
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Gatien12?", // Replace with your actual MySQL password
-  database: "ams_db",
+  password: "Abdifatah1748$$", // Replace with your actual MySQL password
+  database: "ams_db"
 });
 
 // Connect to the database
@@ -30,7 +30,7 @@ db.connect((err) => {
 // ✅ Enable CORS properly
 app.use(
   cors({
-    origin: "http://localhost:3000", // Change this if your frontend runs on a different port
+    origin: "http://localhost:3006", // Change this if your frontend runs on a different port
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -53,6 +53,33 @@ app.post("/api/register", async (req, res) => {
   res.json({ message: "User registered successfully" });
 });
 */
+
+// API Tenants
+app.post("/api/tenants", async (req, res) => {
+  const { name, email, phone } = req.body;
+
+  if (!name || !email || !phone) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    db.query(
+      "INSERT INTO tenants (name, email, phone) VALUES (?, ?, ?)",
+      [name, email, phone],
+      (err, result) => {
+        if (err) {
+          console.error("Database error:", err);
+          return res.status(500).json({ error: "Database error" });
+        }
+        res.status(201).json({ message: "Tenant added successfully" });
+      }
+    );
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 //API REGISTER
 

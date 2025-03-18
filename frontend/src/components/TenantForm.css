@@ -1,0 +1,55 @@
+/* TenantForm.css */
+
+/* Horizontal Form Container */
+.tenant-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between fields */
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Fields */
+.tenant-input {
+  flex: 1; /* Allows inputs to take equal space */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Submit Button */
+.tenant-btn {
+  padding: 10px 15px;
+  background-color: #2563eb; /* Blue */
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Hover Effect */
+.tenant-btn:hover {
+  background-color: #1d4ed8; /* Darker Blue */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tenant-form {
+    flex-direction: column; /* Stack inputs on smaller screens */
+    gap: 12px;
+  }
+
+  .tenant-input,
+  .tenant-btn {
+    width: 100%;
+  }
+}

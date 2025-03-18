@@ -1,6 +1,7 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./Register.css"; // ✅ Import the CSS file
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -40,23 +41,25 @@ const Register = () => {
       setPhone("");
       setPassword("");
     } catch (error) {
-      setError(error.response?.data?.error || "Registration failed. Try again.");
+      setError(
+        error.response?.data?.error || "Registration failed. Try again."
+      );
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-semibold mb-4">REGISTER</h2>
-        {error && <p className="text-red-500">{error}</p>}
-        {success && <p className="text-green-500">{success}</p>}
+    <div className="register-container">
+      <div className="register-card">
+        <h2>REGISTER</h2>
+        {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">{success}</p>}
         <form onSubmit={handleRegister}>
           <input
             type="text"
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border p-2 w-full mb-3"
+            className="register-input"
             required
           />
           <input
@@ -64,7 +67,7 @@ const Register = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border p-2 w-full mb-3"
+            className="register-input"
             required
           />
           <input
@@ -72,7 +75,7 @@ const Register = () => {
             placeholder="Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="border p-2 w-full mb-3"
+            className="register-input"
             required
           />
           <input
@@ -80,13 +83,10 @@ const Register = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border p-2 w-full mb-3"
+            className="register-input"
             required
           />
-          <button
-            type="submit"
-            className="bg-green-500 text-white p-2 w-full rounded-md"
-          >
+          <button type="submit" className="register-btn">
             Register
           </button>
         </form>

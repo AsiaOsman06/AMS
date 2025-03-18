@@ -1,0 +1,105 @@
+/* styles.css */
+
+/* Navbar */
+.navbar {
+  background-color: #1a202c; /* Dark gray */
+  color: white;
+  padding: 1rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #facc15; /* Yellow */
+}
+
+.logout-btn {
+  background-color: #dc2626; /* Red */
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #b91c1c; /* Darker red */
+}
+
+/* Main Content */
+.main-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.main-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1f2937; /* Dark gray */
+}
+
+.main-description {
+  font-size: 1.2rem;
+  color: #4b5563; /* Medium gray */
+  margin-top: 0.5rem;
+}
+
+/* Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.view-apartments {
+  background-color: #2563eb; /* Blue */
+}
+
+.view-apartments:hover {
+  background-color: #1d4ed8; /* Darker blue */
+}
+
+.apply-now {
+  background-color: #16a34a; /* Green */
+}
+
+.apply-now:hover {
+  background-color: #15803d; /* Darker green */
+}
+
