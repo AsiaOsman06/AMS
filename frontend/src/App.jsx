@@ -24,7 +24,7 @@ const App = () => {
     <Router>
       {/* Navbar */}
       <nav className="navbar">
-        <h1>Apartment Management System</h1>
+        <h1>Maple Grove Apartments</h1>
         <div className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
