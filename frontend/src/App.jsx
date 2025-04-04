@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route,NavLink} from "react-router-dom";
 import TenantList from "./components/TenantList";
 import TenantForm from "./components/TenantForm";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import "./styles.css"; 
+import "./styles.css";
 
 const App = () => {
   const [tenants, setTenants] = useState([]);
@@ -22,30 +22,40 @@ const App = () => {
 
   return (
     <Router>
-      {/* Navbar */}
-      <nav className="navbar">
-        <h1>Apartment Management System</h1>
+      {/* ✅ Navigation Bar */}
+      <nav className="custom-navbar">
+        <h1 className="logo">Maple Grove Apartments</h1>
         <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/buildings">Buildings</Link>
+          <NavLink to="/" end className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+            Home
+          </NavLink>
+          <NavLink to="/about" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+            About
+          </NavLink>
+          <NavLink to="/buildings" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+            Buildings
+          </NavLink>
           {user ? (
-            <div className="nav-links">
+            <>
               <span className="text-yellow-400">Welcome, {user.name}</span>
               <button onClick={() => setUser(null)} className="logout-btn">
                 Logout
               </button>
-            </div>
+            </>
           ) : (
-            <div className="nav-links">
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
-            </div>
+            <>
+              <NavLink to="/login" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+                Login
+              </NavLink>
+              <NavLink to="/register" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+                Apply
+              </NavLink>
+            </>
           )}
         </div>
       </nav>
 
-      {/* Main Content */}
+      {/* ✅ Page Content */}
       <div className="main-container">
         <Routes>
           <Route path="/login" element={<Login setUser={setUser} />} />
@@ -59,7 +69,7 @@ const App = () => {
                   <TenantList tenants={tenants} />
                 </div>
               ) : (
-                <div>
+                <div className="home-page">
                   <h2 className="main-heading">
                     Welcome to the Apartment Management System
                   </h2>
@@ -67,12 +77,12 @@ const App = () => {
                     Explore our apartment listings and find your perfect home.
                   </p>
                   <div className="action-buttons">
-                    <Link to="/buildings" className="btn view-apartments">
+                    <NavLink to="/buildings" className="btn view-apartments">
                       View Apartments
-                    </Link>
-                    <Link to="/register" className="btn apply-now">
+                    </NavLink>
+                    <NavLink to="/register" className="btn apply-now">
                       Apply Now
-                    </Link>
+                    </NavLink>
                   </div>
                 </div>
               )

@@ -1,67 +1,103 @@
 /* Register.css */
 
-/* Centering the register container */
-.register-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f8f9fa; /* Light gray background */
+/* Full screen background fix */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #90c8e0; /* Blue background */
+  font-family: 'Arial Narrow', sans-serif;
 }
 
-/* Card styling */
-.register-card {
-  background-color: white;
+/* Main layout: info box + form side by side */
+.register-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 350px;
+}
+
+/* Info Box */
+.info-box {
+  background-color: #cdeffc;
+  border: 2px solid #00334e;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  padding: 1.5rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #0a0a0a;
+  max-width: 400px;
   text-align: center;
 }
 
-/* Heading */
-.register-card h2 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: #333;
+/* Form card */
+.register-card {
+  background-color: #cdeffc;
+  padding: 2rem 2.5rem;
+  border-radius: 5px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  width: 500px;
+  border: 2px solid #00334e;
+  text-align: left;
 }
 
-/* Success & Error Messages */
+/* Form heading */
+.register-card h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  background-color: #1a202c;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+/* Labels */
+.register-card label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+
+/* Inputs */
+.register-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1.2rem;
+  border: 2px solid #00334e;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Submit Button */
+.register-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #1e4b66;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: inset 0px -2px 0px #0f2c3f;
+  transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #16364b;
+}
+
+/* Messages */
 .error-message {
   color: red;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 
 .success-message {
   color: green;
-  margin-bottom: 10px;
-}
-
-/* Input Fields */
-.register-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-/* Register Button */
-.register-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #16a34a; /* Green */
-  color: white;
-  font-size: 1rem;
   font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.register-btn:hover {
-  background-color: #15803d;
+  margin-bottom: 10px;
 }
