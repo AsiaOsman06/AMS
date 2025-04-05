@@ -12,18 +12,48 @@ html, body {
 .master-layout {
 display: flex; /* Creates a flex container */
 flex-direction: row;
-background-color: rgb(255, 255, 255);
 size: fill;
 vertical-align: fill;
 }
 
 .filter-container {
-align-self: flex-start;
-width: 45rem;
+  background-color: #cdeffc;
+  border: 3px solid #000000;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  padding: 1rem 2rem;
+
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #0a0a0a;
+  text-align: center;
+}
+
+.filter-container label {
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .filter-card {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
 padding: 2.5rem;
+width: 20rem;
+}
+
+.select-box {
+  width: 6rem;
+  padding: 0.5rem;
+  margin-bottom: 1.2rem;
+  border: 2px solid #00334e;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+.slider-container {
+  width: 100%;
 }
 
 .rooms-container {
@@ -32,5 +62,74 @@ width: stretch;
 }
 
 .room-card {
+width: stretch;
+}
 
+.slider-values {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.max-label {
+  padding-left: 3rem;
+}
+
+.value-box {
+  padding: 0.2rem 1.2rem;
+  background-color: #d1d1d1;
+  text-decoration: none;
+  border-radius: 10px;
+  border: 2px solid black;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.filter-btn {
+  width: 6rem;
+  align-self: center;
+  padding: 0.3rem;
+  margin-top: 2.5rem;
+
+  background-color: #1e4b66; /* Dark blue */
+  color: white;
+
+  font-size: 1.5rem;
+  font-weight: bold;
+
+  border-color: black;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 8px;
+
+  cursor: pointer;
+  box-shadow: inset 0px -2px 0px #0f2c3f;
+  transition: background-color 0.3s ease;
+}
+
+.rooms-container {
+  width: 100%;
+  background-color: yellow;
+  height: 100%;
+}
+
+.room-cards {
+
+}
+
+.room-card {
+  background-color: #B4E5A2;
+  border: 3px solid #000000;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  padding: 1rem 2rem;
+
+  margin: 2.5rem;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #0a0a0a;
+  text-align: center;
+}
+
+.picture-container {
+  size: 20px 20px;
 }

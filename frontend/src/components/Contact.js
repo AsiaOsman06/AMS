@@ -3,7 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Contact.css";
 
-const Contact = ({ setUser }) => {
+const Contact = () => {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [topic, setTopic] = useState("");
@@ -44,7 +45,7 @@ const Contact = ({ setUser }) => {
           <div className="title-container">
             <h2>Contact form</h2>
           </div>
-          
+
           <form onSubmit={submitTicket}>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">{success}</p>}

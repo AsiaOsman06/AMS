@@ -9,6 +9,7 @@ import TenantForm from "./components/TenantForm";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Contact from "./components/Contact";
+import Rooms from "./components/Rooms";
 import "./styles.css";
 
 const App = () => {
@@ -36,8 +37,8 @@ const App = () => {
           <NavLink to="/contact" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
             Contact
           </NavLink>
-          <NavLink to="/buildings" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
-            Buildings
+          <NavLink to="/rooms" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+            Rooms
           </NavLink>
           {user ? (
             <>
@@ -62,11 +63,13 @@ const App = () => {
       {/* ✅ Page Content */}
       <div className="main-container">
         <Routes>
-
+          
           {/*Must add route for every new page*/}
+
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/rooms" element={<Rooms />} />
           <Route
             path="/"
             element={

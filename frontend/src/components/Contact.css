@@ -17,7 +17,9 @@ html, body {
   background-color: #90c8e0; /* Light blue */
 }
 
-
+.slider-container label {
+  font-weight: bold;
+}
 
 .layout-container {
   display: flex;
