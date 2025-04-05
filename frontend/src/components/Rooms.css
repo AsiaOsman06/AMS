@@ -1,0 +1,36 @@
+/* Rooms.css */
+
+/* Full page background fix */
+html, body {
+  height: 100%;
+  size: fill;
+  margin: 0;
+  padding: 0;
+  background-color: #90c8e0; /* Light blue */
+}
+
+.master-layout {
+display: flex; /* Creates a flex container */
+flex-direction: row;
+background-color: rgb(255, 255, 255);
+size: fill;
+vertical-align: fill;
+}
+
+.filter-container {
+align-self: flex-start;
+width: 45rem;
+}
+
+.filter-card {
+padding: 2.5rem;
+}
+
+.rooms-container {
+align-self: flex-end;
+width: stretch;
+}
+
+.room-card {
+
+}
