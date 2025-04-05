@@ -1,10 +1,14 @@
+//React standards
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route,NavLink} from "react-router-dom";
+
+//Our components (must be added in every time a new page is made)
 import TenantList from "./components/TenantList";
 import TenantForm from "./components/TenantForm";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Contact from "./components/Contact";
 import "./styles.css";
 
 const App = () => {
@@ -29,8 +33,8 @@ const App = () => {
           <NavLink to="/" end className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
             Home
           </NavLink>
-          <NavLink to="/about" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
-            About
+          <NavLink to="/contact" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+            Contact
           </NavLink>
           <NavLink to="/buildings" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
             Buildings
@@ -58,8 +62,11 @@ const App = () => {
       {/* ✅ Page Content */}
       <div className="main-container">
         <Routes>
+
+          {/*Must add route for every new page*/}
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/contact" element={<Contact />} />
           <Route
             path="/"
             element={
