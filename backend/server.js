@@ -15,7 +15,7 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "Abdifatah1748$$", // Replace with your actual MySQL password
-  database: "ams_db"
+  database: "ams_db",
 });
 
 // Connect to the database
@@ -30,14 +30,15 @@ db.connect((err) => {
 // ✅ Enable CORS properly
 app.use(
   cors({
-    origin: "http://localhost:3006", // Change this if your frontend runs on a different port
+    origin: "http://localhost:3003", // Change this if your frontend runs on a different port
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 
 // ✅ Handle Preflight (OPTIONS) requests
-app.options("*", cors());
+// app.options("*", cors());
 
 // Middleware
 app.use(express.json());
@@ -64,14 +65,14 @@ app.post("/api/tenants", async (req, res) => {
 
   try {
     db.query(
-      "INSERT INTO tenants (name, email, phone) VALUES (?, ?, ?)",
-      [name, email, phone],
+      "INSERT INTO User (name, email, phone,password) VALUES (?, ?, ?)",
+      [name, email, phone, password],
       (err, result) => {
         if (err) {
           console.error("Database error:", err);
           return res.status(500).json({ error: "Database error" });
         }
-        res.status(201).json({ message: "Tenant added successfully" });
+        res.status(201).json({ message: "User added successfully" });
       }
     );
   } catch (error) {
@@ -79,7 +80,6 @@ app.post("/api/tenants", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
 
 //API REGISTER
 
@@ -92,29 +92,33 @@ app.post("/api/register", async (req, res) => {
 
   try {
     // Check if the email already exists
-    db.query("SELECT * FROM tenants WHERE email = ?", [email], async (err, results) => {
-      if (err) return res.status(500).json({ error: "Database error" });
+    db.query(
+      "SELECT * FROM User WHERE email = ?",
+      [email],
+      async (err, results) => {
+        if (err) return res.status(500).json({ error: "Database error" });
 
-      if (results.length > 0) {
-        return res.status(400).json({ error: "User already exists" });
-      }
-
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Insert the user into MySQL
-      db.query(
-        "INSERT INTO tenants (name, email, phone, password) VALUES (?, ?, ?, ?)",
-        [name, email, phone, hashedPassword],
-        (err, result) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).json({ error: "Database error" });
-          }
-          res.status(201).json({ message: "User registered successfully" });
+        if (results.length > 0) {
+          return res.status(400).json({ error: "User already exists" });
         }
-      );
-    });
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Insert the user into MySQL
+        db.query(
+          "INSERT INTO User (name, email, phone, password) VALUES (?, ?, ?, ?)",
+          [name, email, phone, hashedPassword],
+          (err, result) => {
+            if (err) {
+              console.error(err);
+              return res.status(500).json({ error: "Database error" });
+            }
+            res.status(201).json({ message: "User registered successfully" });
+          }
+        );
+      }
+    );
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ error: "Server error" });
@@ -142,29 +146,39 @@ app.post("/api/login", async (req, res) => {
   }
 
   try {
-    db.query("SELECT * FROM tenants WHERE email = ?", [email], async (err, results) => {
-      if (err) return res.status(500).json({ error: "Database error" });
+    db.query(
+      "SELECT * FROM User WHERE email = ?",
+      [email],
+      async (err, results) => {
+        if (err) return res.status(500).json({ error: "Database error" });
 
-      if (results.length === 0) {
-        return res.status(401).json({ error: "Invalid credentials" });
+        if (results.length === 0) {
+          return res.status(401).json({ error: "Invalid credentials" });
+        }
+
+        const user = results[0];
+
+        // Compare passwords
+        // const isMatch = await bcrypt.compare(password, user.password);
+        if (password !== user.password) {
+          return res.status(401).json({ error: "Invalid credentials" });
+        }
+
+        res.json({
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+          },
+        });
       }
-
-      const user = results[0];
-
-      // Compare passwords
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(401).json({ error: "Invalid credentials" });
-      }
-
-      res.json({ user: { id: user.id, name: user.name, email: user.email, phone: user.phone } });
-    });
+    );
   } catch (error) {
     console.error("login error:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
-
 
 // Start the server
 const PORT = process.env.PORT || 5002;
