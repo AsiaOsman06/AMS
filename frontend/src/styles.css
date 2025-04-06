@@ -7,7 +7,9 @@ body {
 }
 
 /* Navbar Styling */
+/* #region */
 .custom-navbar {
+  height:10vh;
   background-color: #0f1f35;
   color: white;
   padding: 1rem 2rem;
@@ -55,73 +57,70 @@ body {
   background-color: #22c55e;
   box-shadow: 0 0 10px #22c55e;
 }
+/* #endregion */
 
 /* Home Page */
-.home-page {
-  text-align: center;
-  padding: 6rem 1rem;
-  color: #0a0a0a;
-}
-
-.main-heading {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #1f2937;
-  margin-bottom: 1rem;
-}
-
-.main-description {
-  font-size: 1.1rem;
-  color: #334155;
-  margin-bottom: 2rem;
-}
-
-.action-buttons {
+/* #region */
+.master-layout {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 4px;
 }
 
-.btn {
-  padding: 0.7rem 1.4rem;
-  border-radius: 6px;
-  color: white;
+.quote-container {
+  width: 25%;
+  height: 90vh;
+  background-color: #C1E5F5;
+
+  outline-width: .3rem;
+  outline-Color: black;
+  outline-style: solid;
+}
+
+.quote-box {
+  background-color: #B4E5A2;
+  margin: 2.5rem;
+  padding: 2rem;
+
+  outline-width: .3rem;
+  outline-Color: black;
+  outline-style: solid;
+}
+
+.quote {
+  font-family: "Century Gothic";
+  font-size: 20px;
+}
+
+.customer {
   font-weight: bold;
-  text-decoration: none;
-  transition: 0.3s ease, transform 0.2s ease;
+  font-size: 24px;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
+.welcome-container {
+  display: flex;
+  width: 50%;
+  height: 90vh;
+  justify-content: center; /* horizontal centering */
+  align-items: center;
 }
 
-.view-apartments {
-  background-color: #3b82f6;
+.welcome-card {
+  background-color: #C1E5F5;
+  justify-self: center;
+  align-self: center;
+  justify-items: center;
+
+  outline-width: .3rem;
+  outline-Color: black;
+  outline-style: solid;
+
+  width: 80%;
 }
 
-.view-apartments:hover {
-  background-color: #2563eb;
+.welcome-message {
+  font-size: 50px;
+  text-align: center;
 }
-
-.apply-now {
-  background-color: #16a34a;
-}
-
-.apply-now:hover {
-  background-color: #15803d;
-}
-
-/* Logout button (when logged in) */
-.logout-btn {
-  background-color: #dc2626;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.logout-btn:hover {
-  background-color: #b91c1c;
-}
+/* #endregion */
