@@ -8,11 +8,18 @@ const Rooms = () => {
   console.log("Rooms component mounted");
 
   const [bedroomsFil, setbedroomsFil] = useState(2);
-  const [bathroomsFil, setBathroomsFil] = useState(2);
+  const [bathroomsFil, setBathroomsFil] = useState(1);
   const [floorFil, setFloorFil] = useState(1);
   const [priceRange, setRange] = useState([300, 800]);
 
   const [imageUrl, setImage] = useState('https://resource.rentcafe.com/image/upload/q_auto,f_auto/s3/2/111265/gallery-flats_1-bedroom-apartment_kitchen-livingroom-2_p7400767.png');
+  const [bedrooms, setBedrooms] = useState(2);
+  const [bathrooms, setBathrooms] = useState(1);
+  const [rent, setRent] = useState(500);
+  const [building, setBuilding] = useState(1);
+  const [floor, setFloor] = useState(1);
+  const [roomNum, setRoomNum] = useState(111);
+  const [description, setDescription] = useState("Default Description");
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -83,32 +90,63 @@ const Rooms = () => {
       </div>
 
       <div className="rooms-container">
-        <div className="room-cards">
           <div className="room-card">
+
           { /*Picture*/ }
+          <div className="room-element">
             <div className="picture-container">
-            <img src={imageUrl} alt="Description of image" />
-
+              <img
+              src={imageUrl}
+              alt="Description of image"
+              onChange={(e) => setImage(e.target.value)}
+              />
             </div>
-            { /*Bedrooms, bathrooms, price*/ }
+          </div>
+
+            { /*Bedrooms, bathrooms, rent*/ }
+          <div className="room-element">
             <div className="data-container">
+              <div className="data-Line">
+                <p><b>Bedrooms: </b>{bedrooms}</p>
+              </div>
 
+              <div className="data-Line">
+                <p><b>Bathrooms: </b>{bathrooms}</p>
+              </div>
 
+              <div className="data-Line">
+                <p><b>Rent: </b>${rent}</p>
+              </div>
             </div>
+          </div>
 
             { /*Building, floor, room*/ }
-            <div className="data-container">
+            <div className="room-element">
+              <div className="data-container">
+              <div className="data-Line">
+                  <p><b>Building: </b>{building}</p>
+                </div>
 
-            { /* Description */ }
+                <div className="data-Line">
+                  <p><b>Floor: </b>{floor}</p>
+                </div>
+
+                <div className="data-Line">
+                  <p><b>Room: </b>{roomNum}</p>
+                </div>
+              </div>
             </div>
 
-            <div className="Description container">
-
+            { /* Description */ }
+            <div className="room-element">
+              <div className="description-container">
+                <h2>Description</h2>
+                <h3>{description}</h3>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

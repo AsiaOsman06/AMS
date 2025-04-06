@@ -3,17 +3,16 @@
 /* Full page background fix */
 html, body {
   height: 100%;
-  size: fill;
-  margin: 0;
-  padding: 0;
+
+
   background-color: #90c8e0; /* Light blue */
 }
 
 .master-layout {
 display: flex; /* Creates a flex container */
 flex-direction: row;
-size: fill;
-vertical-align: fill;
+align-items: flex-start;
+height: 100%;
 }
 
 .filter-container {
@@ -54,15 +53,6 @@ width: 20rem;
 
 .slider-container {
   width: 100%;
-}
-
-.rooms-container {
-align-self: flex-end;
-width: stretch;
-}
-
-.room-card {
-width: stretch;
 }
 
 .slider-values {
@@ -108,20 +98,19 @@ width: stretch;
 }
 
 .rooms-container {
-  width: 100%;
-  background-color: yellow;
+  flex: 1;
+
   height: 100%;
 }
 
-.room-cards {
-
-}
-
 .room-card {
+  display: flex;
+  flex-direction: row;
   background-color: #B4E5A2;
   border: 3px solid #000000;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
   padding: 1rem 2rem;
+  height: 100%;
 
   margin: 2.5rem;
   font-size: 2rem;
@@ -130,6 +119,27 @@ width: stretch;
   text-align: center;
 }
 
+.room-element {
+  min-width: 25%;
+}
+
 .picture-container {
-  size: 20px 20px;
+  max-width: 20rem;
+  max-height: 20rem;
+  border: 3px solid #000000;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.description-container {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  width: 100%;
+  align-items: center;
+  font-size: 20px;
+  height: 100%;
+}
+h2 {
+  font-size: 30px;
+  font-weight: Bold;
 }
