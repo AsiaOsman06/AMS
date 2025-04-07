@@ -14,7 +14,7 @@ const app = express();
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Abdifatah1748$$", // Replace with your actual MySQL password
+  password: "Gatien12?", // Replace with your actual MySQL password
   database: "ams_db"
 });
 
@@ -30,7 +30,7 @@ db.connect((err) => {
 // ✅ Enable CORS properly
 app.use(
   cors({
-    origin: "http://localhost:3006", // Change this if your frontend runs on a different port
+    origin: "http://localhost:3000", // Change this if your frontend runs on a different port
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -45,14 +45,7 @@ app.use(express.json());
 // Routes
 app.use("/api", tenantRoutes);
 
-/*
-app.post("/api/register", async (req, res) => {
-  const { name, email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  users.push({ name, email, password: hashedPassword });
-  res.json({ message: "User registered successfully" });
-});
-*/
+
 
 // API Tenants
 app.post("/api/tenants", async (req, res) => {
@@ -121,17 +114,6 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
-/*app.post("/api/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = users.find((u) => u.email === email);
-
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ error: "Invalid credentials" });
-  }
-
-  res.json({ user: { name: user.name, email: user.email } });
-});
-*/
 
 //API LOGIN
 app.post("/api/login", async (req, res) => {
@@ -161,6 +143,54 @@ app.post("/api/login", async (req, res) => {
     });
   } catch (error) {
     console.error("login error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// API CONTACT Form
+app.post("/api/contact", (req, res) => {
+  const { name, email, topic, message } = req.body;
+
+  if (!name || !email || !topic || !message) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  // Insert data into the contact_form table
+  const query = "INSERT INTO contact_form (name, email, topic, message) VALUES (?, ?, ?, ?)";
+  db.execute(query, [name, email, topic, message], (err, results) => {
+    if (err) {
+      console.error("Error inserting contact form data:", err);
+      return res.status(500).json({ error: "Server error. Please try again later." });
+    }
+
+    console.log("Contact form data inserted:", results);
+    res.status(201).json({ success: "Your message has been submitted successfully" });
+  });
+});
+
+//API APPLICATIONS
+app.post("/api/applications", async (req, res) => {
+  const { firstName, lastName, email, building, room, creditScore, licenseNumber, accommodations } = req.body;
+
+  if (!firstName || !lastName || !email || !building || !room || !creditScore || !licenseNumber) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    const query = `
+      INSERT INTO applications (first_name, last_name, email, building, room, credit_score, license_number, accommodations)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(query, [firstName, lastName, email, building, room, creditScore, licenseNumber, accommodations], (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).json({ error: "Database error" });
+      }
+      res.status(201).json({ message: "Application submitted successfully" });
+    });
+  } catch (error) {
+    console.error("Server error:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
