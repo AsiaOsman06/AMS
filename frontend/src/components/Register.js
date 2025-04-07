@@ -10,8 +10,8 @@ const Register = () => {
     email: "",
     building: "Building 1",
     room: "Room 145",
-    password: "",
-    confirmPassword: "",
+    creditScore: "",
+    licenseNumber: "",
     accommodations: "",
   });
 
@@ -34,7 +34,7 @@ const Register = () => {
       building,
       room,
       creditScore,
-      LicenseNumber,
+      licenseNumber,
       accommodations,
     } = formData;
 
@@ -87,6 +87,7 @@ const Register = () => {
                 type="text"
                 name="firstName"
                 value={formData.firstName}
+                placeholder="John"
                 onChange={handleChange}
                 className="register-input"
               />
@@ -97,6 +98,7 @@ const Register = () => {
                 type="text"
                 name="lastName"
                 value={formData.lastName}
+                placeholder="Smith"
                 onChange={handleChange}
                 className="register-input"
               />
@@ -108,6 +110,7 @@ const Register = () => {
             type="email"
             name="email"
             value={formData.email}
+            placeholder="JohnSmith@gmail.com"
             onChange={handleChange}
             className="register-input"
           />
@@ -146,6 +149,7 @@ const Register = () => {
                 type="integer"
                 name="creditScore"
                 value={formData.creditScore}
+                placeholder="650"
                 onChange={handleChange}
                 className="register-input"
               />
@@ -155,7 +159,8 @@ const Register = () => {
               <input
                 type="Text"
                 name="licenseNumber"
-                value={formData.confirmPassword}
+                value={formData.licenseNumber}
+                placeholder="A123-456-789-123"
                 onChange={handleChange}
                 className="register-input"
               />
