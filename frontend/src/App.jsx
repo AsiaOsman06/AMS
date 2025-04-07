@@ -1,9 +1,13 @@
-//React standards
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Routes, Route,NavLink} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  NavLink,
+} from "react-router-dom";
 
-//Our components (must be added in every time a new page is made)
+// Components
 import TenantList from "./components/TenantList";
 import TenantForm from "./components/TenantForm";
 import Login from "./components/Login";
@@ -31,15 +35,42 @@ const App = () => {
       <nav className="custom-navbar">
         <h1 className="logo">Maple Grove Apartments</h1>
         <div className="nav-links">
-          <NavLink to="/" end className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              isActive ? "nav-btn active" : "nav-btn"
+            }
+          >
             Home
           </NavLink>
-          <NavLink to="/contact" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              isActive ? "nav-btn active" : "nav-btn"
+            }
+          >
             Contact
           </NavLink>
-          <NavLink to="/rooms" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+          <NavLink
+            to="/rooms"
+            className={({ isActive }) =>
+              isActive ? "nav-btn active" : "nav-btn"
+            }
+          >
             Rooms
           </NavLink>
+
+          {/* ✅ Always visible Register */}
+          <NavLink
+            to="/register"
+            className={({ isActive }) =>
+              isActive ? "nav-btn active" : "nav-btn"
+            }
+          >
+            Register
+          </NavLink>
+
           {user ? (
             <>
               <span className="text-yellow-400">Welcome, {user.name}</span>
@@ -49,10 +80,22 @@ const App = () => {
             </>
           ) : (
             <>
-              <NavLink to="/login" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive ? "nav-btn active" : "nav-btn"
+                }
+              >
                 Login
               </NavLink>
-              <NavLink to="/register" className={({ isActive }) => isActive ? "nav-btn active" : "nav-btn"}>
+
+              {/* ✅ Apply only when user is NOT logged in */}
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
+                  isActive ? "nav-btn active" : "nav-btn"
+                }
+              >
                 Apply
               </NavLink>
             </>
@@ -63,13 +106,16 @@ const App = () => {
       {/* ✅ Page Content */}
       <div className="main-container">
         <Routes>
+
           
           {/*Must add route for every new page*/}
+
 
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/rooms" element={<Rooms />} />
+
           <Route path="/"/></Routes>
 
           <div className="master-layout">
@@ -123,8 +169,8 @@ const App = () => {
             </div>
           </div>
 
-      </div>
-    </Router>
+        </Routes>
+
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // Added for navigation
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
 const Register = () => {
@@ -69,9 +69,18 @@ const Register = () => {
 
   return (
     <div className="register-layout">
+      {/* ✅ Top nav bar inside the register page */}
+      <nav className="register-nav">
+        <div className="logo">Maple Grove Apartments</div>
+        <Link to="/login" className="nav-btn">
+          Back to Login
+        </Link>
+      </nav>
+
       <div className="info-box">
         <p>
-          For any questions or comments regarding Maple Grove Apartments, please use the contact page as linked above.
+          For any questions or comments regarding Maple Grove Apartments, please
+          use the contact page as linked above.
         </p>
       </div>
 
