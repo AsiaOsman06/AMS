@@ -33,8 +33,8 @@ const Register = () => {
       email,
       building,
       room,
-      password,
-      confirmPassword,
+      creditScore,
+      LicenseNumber,
       accommodations,
     } = formData;
 
@@ -44,15 +44,10 @@ const Register = () => {
       !email ||
       !building ||
       !room ||
-      !password ||
-      !confirmPassword
+      !creditScore ||
+      !licenseNumber
     ) {
       setError("All fields are required");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
       return;
     }
 
@@ -66,8 +61,8 @@ const Register = () => {
       email: "",
       building: "Building 1",
       room: "Room 145",
-      password: "",
-      confirmPassword: "",
+      creditScore: "650",
+      licenseNumber: "A123-456-789-123",
       accommodations: "",
     });
   };
@@ -146,20 +141,20 @@ const Register = () => {
 
           <div style={{ display: "flex", gap: "1rem" }}>
             <div style={{ flex: 1 }}>
-              <label>Password:</label>
+              <label>Credit score:</label>
               <input
-                type="password"
-                name="password"
-                value={formData.password}
+                type="integer"
+                name="creditScore"
+                value={formData.creditScore}
                 onChange={handleChange}
                 className="register-input"
               />
             </div>
             <div style={{ flex: 1 }}>
-              <label>Re-Type Password:</label>
+              <label>License Number:</label>
               <input
-                type="password"
-                name="confirmPassword"
+                type="Text"
+                name="licenseNumber"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 className="register-input"
