@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Added for navigation
 import axios from "axios";
+import { useNavigate} from "react-router-dom";
 import "./Register.css";
 
 const Register = () => {
@@ -17,65 +18,43 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    const {
-      firstName,
-      lastName,
-      email,
-      building,
-      room,
-      creditScore,
-      licenseNumber,
-      accommodations,
-    } = formData;
+    try {
+      const response = await axios.post("http://localhost:5002/api/applications", formData);
+      setSuccess(response.data.message);
 
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !building ||
-      !room ||
-      !creditScore ||
-      !licenseNumber
-    ) {
-      setError("All fields are required");
-      return;
+      // Reset form after successful submission
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        building: "Building 1",
+        room: "Room 145",
+        creditScore: "",
+        licenseNumber: "",
+        accommodations: "",
+      });
+
+      // Redirect user to a different page after successful submission (optional)
+      setTimeout(() => navigate("/"), 2000);
+    } catch (error) {
+      setError(error.response?.data?.error || "An error occurred. Please try again.");
     }
-
-    setSuccess("Application submitted successfully!");
-    console.log("Submitted:", formData);
-
-    // Reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      building: "Building 1",
-      room: "Room 145",
-      creditScore: "650",
-      licenseNumber: "A123-456-789-123",
-      accommodations: "",
-    });
   };
 
   return (
     <div className="register-layout">
       {/* ✅ Top nav bar inside the register page */}
-      <nav className="register-nav">
-        <div className="logo">Maple Grove Apartments</div>
-        <Link to="/login" className="nav-btn">
-          Back to Login
-        </Link>
-      </nav>
 
       <div className="info-box">
         <p>
@@ -99,6 +78,7 @@ const Register = () => {
                 placeholder="John"
                 onChange={handleChange}
                 className="register-input"
+                required
               />
             </div>
             <div style={{ flex: 1 }}>
@@ -110,6 +90,7 @@ const Register = () => {
                 placeholder="Smith"
                 onChange={handleChange}
                 className="register-input"
+                required
               />
             </div>
           </div>
@@ -122,6 +103,7 @@ const Register = () => {
             placeholder="JohnSmith@gmail.com"
             onChange={handleChange}
             className="register-input"
+            required
           />
 
           <div style={{ display: "flex", gap: "1rem" }}>
@@ -153,30 +135,32 @@ const Register = () => {
 
           <div style={{ display: "flex", gap: "1rem" }}>
             <div style={{ flex: 1 }}>
-              <label>Credit score:</label>
+              <label>Credit Score:</label>
               <input
-                type="integer"
+                type="number"
                 name="creditScore"
                 value={formData.creditScore}
                 placeholder="650"
                 onChange={handleChange}
                 className="register-input"
+                required
               />
             </div>
             <div style={{ flex: 1 }}>
               <label>License Number:</label>
               <input
-                type="Text"
+                type="text"
                 name="licenseNumber"
                 value={formData.licenseNumber}
                 placeholder="A123-456-789-123"
                 onChange={handleChange}
                 className="register-input"
+                required
               />
             </div>
           </div>
 
-          <label>Accommodations:</label>
+          <label>Accommodations (Optional):</label>
           <textarea
             name="accommodations"
             placeholder="Wheelchair accessibility, financial assistance..."

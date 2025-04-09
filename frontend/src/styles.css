@@ -9,7 +9,7 @@ body {
 /* Navbar Styling */
 /* #region */
 .custom-navbar {
-  height:10vh;
+  height:7rem;
   background-color: #0f1f35;
   color: white;
   padding: 1rem 2rem;
@@ -25,7 +25,7 @@ body {
 }
 
 .logo {
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: bold;
   font-style: bold;
 }
@@ -33,19 +33,19 @@ body {
 .nav-links {
   display: flex;
   font-style: bold;
-  font-size: 1.5rem;
+  font-size: 3rem;
   gap: 1rem;
   flex-wrap: wrap;
 }
 
 .nav-btn {
-  padding: 0.5rem 1.2rem;
+  padding: .5rem 1.2rem;
   background-color: #145374;
   color: white;
   text-decoration: none;
   border-radius: 10px;
   border: 2px solid black;
-  font-size: 1.1rem;
+  font-size: 2rem;
   transition: all 0.3s ease;
 }
 
