@@ -13,11 +13,13 @@ import {
 // Components
 import GuestNavBar from "./components/NavBars/GuestNavBar";
 import TenantNavBar from "./components/NavBars/TenantNavBar";
+import OwnerNavBar from "./components/NavBars/OwnerNavBar";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Contact from "./components/Contact";
 import Rooms from "./components/Rooms";
 import Home from "./components/Home";
+import OwnerTickets from "./components/OwnerTickets"
 import "./styles.css";
 
 const App = () => {
@@ -36,8 +38,8 @@ const App = () => {
   return (
     <Router>
       
-
-    <TenantNavBar user={user} setUser={setUser} />
+      {/*Set which navbar you want to use for frontend development*/}
+    <OwnerNavBar user={user} setUser={setUser} />
 
 
       {/* ✅ Page Content */}
@@ -51,6 +53,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/rooms" element={<Rooms />} />
+          <Route path="/OwnerTickets" element={<OwnerTickets />} />
 
           <Route path="/"/>
         </Routes>

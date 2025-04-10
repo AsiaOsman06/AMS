@@ -21,7 +21,7 @@ const TenantNavBar = ({ user, setUser }) => {
             isActive ? "nav-btn active" : "nav-btn"
             }
         >
-            TestingTesting
+            Contact Us
         </NavLink>
         <NavLink
             to="/rooms"
