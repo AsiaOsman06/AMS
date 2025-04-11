@@ -1,79 +1,49 @@
+// TenantNavBar.jsx
+
 import { NavLink } from "react-router-dom";
-import "./GuestNavBar.css";
+import "./TenantNavBar.css";
 
 const TenantNavBar = ({ user, setUser }) => {
-    return (
-        <nav className="custom-navbar">
-        <h1 className="logo">Maple Grove Apartments</h1>
-        <div className="nav-links">
+  return (
+    <nav className="tenant-navbar">
+      <h1 className="tenant-logo">Maple Grove Apartments</h1>
+      <div className="tenant-links">
         <NavLink
-            to="/"
-            end
-            className={({ isActive }) =>
-            isActive ? "nav-btn active" : "nav-btn"
-            }
+          to="/tenant-home"
+          className={({ isActive }) =>
+            isActive ? "tenant-tab active" : "tenant-tab"
+          }
         >
-            Home
+          Home
         </NavLink>
         <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-            isActive ? "nav-btn active" : "nav-btn"
-            }
+          to="/contact"
+          className={({ isActive }) =>
+            isActive ? "tenant-tab active" : "tenant-tab"
+          }
         >
-            TestingTesting
+          Maintenance
         </NavLink>
         <NavLink
-            to="/rooms"
-            className={({ isActive }) =>
-            isActive ? "nav-btn active" : "nav-btn"
-            }
+          to="/rooms"
+          className={({ isActive }) =>
+            isActive ? "tenant-tab active" : "tenant-tab"
+          }
         >
-            Rooms
-        </NavLink>
-
-        {/* ✅ Always visible Register */}
-        <NavLink
-            to="/register"
-            className={({ isActive }) =>
-            isActive ? "nav-btn active" : "nav-btn"
-            }
-        >
-            Register
+          Rent
         </NavLink>
 
         {user ? (
-            <>
-            <span className="text-yellow-400">Welcome, {user.name}</span>
-            <button onClick={() => setUser(null)} className="logout-btn">
-                Logout
-            </button>
-            </>
-        ) : (
-            <>
-            <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                isActive ? "nav-btn active" : "nav-btn"
-                }
-            >
-                Login
-            </NavLink>
-
-            {/* ✅ Apply only when user is NOT logged in */}
-            <NavLink
-                to="/register"
-                className={({ isActive }) =>
-                isActive ? "nav-btn active" : "nav-btn"
-                }
-            >
-                Apply
-            </NavLink>
-            </>
-        )}
-        </div>
-        </nav>
-    );
+          <button
+            onClick={() => setUser(null)}
+            className="tenant-logout-btn"
+          >
+            Logout
+          </button>
+        ) : null}
+      </div>
+    </nav>
+  );
 };
 
 export default TenantNavBar;

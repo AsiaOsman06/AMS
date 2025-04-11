@@ -1,61 +1,62 @@
-//Imports
-
-//React Defaults
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+// App.jsx
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate
 } from "react-router-dom";
 
-
-// Components
+// NavBars
 import GuestNavBar from "./components/NavBars/GuestNavBar";
 import TenantNavBar from "./components/NavBars/TenantNavBar";
+// import OwnerNavBar from "./components/NavBars/OwnerNavBar"; // Uncomment when ready
+
+// Pages
+import TenantHome from "./components/TenantHome";
 import Login from "./components/Login";
-import Register from "./components/Register";
+import UserRegister from "./components/UserRegister";
+import Apply from "./components/Apply";
 import Contact from "./components/Contact";
 import Rooms from "./components/Rooms";
 import Home from "./components/Home";
+
 import "./styles.css";
 
 const App = () => {
-  const [tenants, setTenants] = useState([]);
-  const [user, setUser] = useState(null);
+  // Mocked logged-in user
+  const [user, setUser] = useState({ name: "Othello" });
 
-  useEffect(() => {
-    if (user) {
-      axios
-        .get("http://localhost:5002/api/tenants")
-        .then((response) => setTenants(response.data))
-        .catch((error) => console.error("Error fetching tenants:", error));
-    }
-  }, [user]);
+  // Change this to "guest", "tenant", or "owner" to preview the correct view
+  const [mode] = useState("tenant");
 
   return (
     <Router>
-      
+      {/* NAVBAR BASED ON MODE */}
+      {mode === "guest" && <GuestNavBar />}
+      {mode === "tenant" && <TenantNavBar user={user} setUser={setUser} />}
+      {/* {mode === "owner" && <OwnerNavBar />} */}
 
-    <TenantNavBar user={user} setUser={setUser} />
-
-
-      {/* ✅ Page Content */}
       <div className="main-container">
         <Routes>
+          {/* REDIRECT "/" BASED ON MODE */}
+          <Route path="/" element={
+            mode === "guest" ? <Navigate to="/home" /> :
+            mode === "tenant" ? <Navigate to="/tenant-home" /> :
+            <Navigate to="/home" />
+          } />
 
-          
-          {/*Must add route for every new page*/}
-          <Route path="/" element={<Home />} />
+          {/* ROUTES */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/tenant-home" element={<TenantHome user={user} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<UserRegister />} />
+          <Route path="/apply" element={<Apply />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/rooms" element={<Rooms />} />
-
-          <Route path="/"/>
         </Routes>
       </div>
-      </Router>
+    </Router>
   );
 };
 
