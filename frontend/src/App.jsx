@@ -38,7 +38,9 @@ const App = () => {
   return (
     <Router>
       
-      {/*Set which navbar you want to use for frontend development*/}
+      {/*Set which navbar you want to use for frontend development.
+      Will need to be adjusted before submission to change
+      based on who the user is*/}
     <OwnerNavBar user={user} setUser={setUser} />
 
 
