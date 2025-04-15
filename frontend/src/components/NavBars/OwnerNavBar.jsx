@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import "./GuestNavBar.css";
+import "./NavBarStyles.css";
 
 const TenantNavBar = ({ user, setUser }) => {
     return (

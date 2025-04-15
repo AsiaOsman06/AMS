@@ -10,11 +10,11 @@ dotenv.config();
 
 const app = express();
 
-//create a mysql connection pool
+// Create a MySQL connection
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Gatien12?", // Replace with your actual MySQL password
+  password: "Othello22", // Replace with your actual password
   database: "ams_db"
 });
 
@@ -30,15 +30,12 @@ db.connect((err) => {
 // ✅ Enable CORS properly
 app.use(
   cors({
-    origin: "http://localhost:3000", // Change this if your frontend runs on a different port
+    origin: "http://localhost:3000", // Update if frontend uses a different port
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
-
-// ✅ Handle Preflight (OPTIONS) requests
-// app.options("*", cors());
 
 // Middleware
 app.use(express.json());
@@ -46,19 +43,17 @@ app.use(express.json());
 // Routes
 app.use("/api", tenantRoutes);
 
-
-
-// API Tenants
+// API Tenants (Fix: Added 'password' to match SQL statement)
 app.post("/api/tenants", async (req, res) => {
-  const { name, email, phone } = req.body;
+  const { name, email, phone, password } = req.body;
 
-  if (!name || !email || !phone) {
+  if (!name || !email || !phone || !password) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
   try {
     db.query(
-      "INSERT INTO User (name, email, phone,password) VALUES (?, ?, ?)",
+      "INSERT INTO User (name, email, phone, password) VALUES (?, ?, ?, ?)",
       [name, email, phone, password],
       (err, result) => {
         if (err) {
@@ -74,8 +69,7 @@ app.post("/api/tenants", async (req, res) => {
   }
 });
 
-//API REGISTER
-
+// API Register
 app.post("/api/register", async (req, res) => {
   const { name, email, phone, password } = req.body;
 
@@ -84,42 +78,34 @@ app.post("/api/register", async (req, res) => {
   }
 
   try {
-    // Check if the email already exists
-    db.query(
-      "SELECT * FROM User WHERE email = ?",
-      [email],
-      async (err, results) => {
-        if (err) return res.status(500).json({ error: "Database error" });
+    db.query("SELECT * FROM User WHERE email = ?", [email], async (err, results) => {
+      if (err) return res.status(500).json({ error: "Database error" });
 
-        if (results.length > 0) {
-          return res.status(400).json({ error: "User already exists" });
-        }
-
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Insert the user into MySQL
-        db.query(
-          "INSERT INTO User (name, email, phone, password) VALUES (?, ?, ?, ?)",
-          [name, email, phone, hashedPassword],
-          (err, result) => {
-            if (err) {
-              console.error(err);
-              return res.status(500).json({ error: "Database error" });
-            }
-            res.status(201).json({ message: "User registered successfully" });
-          }
-        );
+      if (results.length > 0) {
+        return res.status(400).json({ error: "User already exists" });
       }
-    );
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      db.query(
+        "INSERT INTO User (name, email, phone, password) VALUES (?, ?, ?, ?)",
+        [name, email, phone, hashedPassword],
+        (err, result) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Database error" });
+          }
+          res.status(201).json({ message: "User registered successfully" });
+        }
+      );
+    });
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-
-//API LOGIN
+// API Login
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -128,41 +114,36 @@ app.post("/api/login", async (req, res) => {
   }
 
   try {
-    db.query(
-      "SELECT * FROM User WHERE email = ?",
-      [email],
-      async (err, results) => {
-        if (err) return res.status(500).json({ error: "Database error" });
+    db.query("SELECT * FROM User WHERE email = ?", [email], async (err, results) => {
+      if (err) return res.status(500).json({ error: "Database error" });
 
-        if (results.length === 0) {
-          return res.status(401).json({ error: "Invalid credentials" });
-        }
-
-        const user = results[0];
-
-        // Compare passwords
-        // const isMatch = await bcrypt.compare(password, user.password);
-        if (password !== user.password) {
-          return res.status(401).json({ error: "Invalid credentials" });
-        }
-
-        res.json({
-          user: {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-          },
-        });
+      if (results.length === 0) {
+        return res.status(401).json({ error: "Invalid credentials" });
       }
-    );
+
+      const user = results[0];
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+
+      res.json({
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+        },
+      });
+    });
   } catch (error) {
     console.error("login error:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-// API CONTACT Form
+// API Contact Form
 app.post("/api/contact", (req, res) => {
   const { name, email, topic, message } = req.body;
 
@@ -170,7 +151,6 @@ app.post("/api/contact", (req, res) => {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  // Insert data into the contact_form table
   const query = "INSERT INTO contact_form (name, email, topic, message) VALUES (?, ?, ?, ?)";
   db.execute(query, [name, email, topic, message], (err, results) => {
     if (err) {
@@ -183,9 +163,18 @@ app.post("/api/contact", (req, res) => {
   });
 });
 
-//API APPLICATIONS
+// API Applications
 app.post("/api/applications", async (req, res) => {
-  const { firstName, lastName, email, building, room, creditScore, licenseNumber, accommodations } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    building,
+    room,
+    creditScore,
+    licenseNumber,
+    accommodations,
+  } = req.body;
 
   if (!firstName || !lastName || !email || !building || !room || !creditScore || !licenseNumber) {
     return res.status(400).json({ error: "All fields are required" });
@@ -193,23 +182,28 @@ app.post("/api/applications", async (req, res) => {
 
   try {
     const query = `
-      INSERT INTO applications (first_name, last_name, email, building, room, credit_score, license_number, accommodations)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO applications (
+        first_name, last_name, email, building, room,
+        credit_score, license_number, accommodations
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    db.query(query, [firstName, lastName, email, building, room, creditScore, licenseNumber, accommodations], (err, result) => {
-      if (err) {
-        console.error("Database error:", err);
-        return res.status(500).json({ error: "Database error" });
+    db.query(
+      query,
+      [firstName, lastName, email, building, room, creditScore, licenseNumber, accommodations],
+      (err, result) => {
+        if (err) {
+          console.error("Database error:", err);
+          return res.status(500).json({ error: "Database error" });
+        }
+        res.status(201).json({ message: "Application submitted successfully" });
       }
-      res.status(201).json({ message: "Application submitted successfully" });
-    });
+    );
   } catch (error) {
     console.error("Server error:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
-
 
 // Start the server
 const PORT = process.env.PORT || 5002;
