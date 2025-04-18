@@ -10,11 +10,7 @@ import {
 // NavBars
 import GuestNavBar from "./components/NavBars/GuestNavBar";
 import TenantNavBar from "./components/NavBars/TenantNavBar";
-<<<<<<< HEAD
-// import OwnerNavBar from "./components/NavBars/OwnerNavBar"; // Uncomment when ready
-=======
 import OwnerNavBar from "./components/NavBars/OwnerNavBar";
->>>>>>> main
 
 // Pages
 import TenantHome from "./components/TenantHome";
@@ -24,10 +20,7 @@ import Apply from "./components/Apply";
 import Contact from "./components/Contact";
 import Rooms from "./components/Rooms";
 import Home from "./components/Home";
-<<<<<<< HEAD
-=======
 import MaintenanceForm from "./components/MaintenanceForm";
->>>>>>> main
 
 import "./styles.css";
 
@@ -36,22 +29,14 @@ const App = () => {
   const [user, setUser] = useState({ name: "Othello" });
 
   // Change this to "guest", "tenant", or "owner" to preview the correct view
-<<<<<<< HEAD
-  const [mode] = useState("tenant");
-=======
   const [mode] = useState("guest");
->>>>>>> main
 
   return (
     <Router>
       {/* NAVBAR BASED ON MODE */}
       {mode === "guest" && <GuestNavBar />}
       {mode === "tenant" && <TenantNavBar user={user} setUser={setUser} />}
-<<<<<<< HEAD
-      {/* {mode === "owner" && <OwnerNavBar />} */}
-=======
-      {mode === "owner" && <OwnerNavBar user={user} setUser={setUser}/>}
->>>>>>> main
+      {mode === "owner" && <OwnerNavBar user={user} setUser={setUser} />}
 
       <div className="main-container">
         <Routes>
@@ -70,10 +55,7 @@ const App = () => {
           <Route path="/apply" element={<Apply />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/rooms" element={<Rooms />} />
-<<<<<<< HEAD
-=======
           <Route path="/maintenanceForm" element={<MaintenanceForm />} />
->>>>>>> main
         </Routes>
       </div>
     </Router>
