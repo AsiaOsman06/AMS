@@ -5,7 +5,6 @@ const db = mysql.createConnection({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || 'Othello22',
-  password: process.env.DB_PASSWORD || 'florida',
   database: process.env.DB_NAME || 'ams_db',
 });
 
