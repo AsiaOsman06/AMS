@@ -29,7 +29,7 @@ const App = () => {
   const [user, setUser] = useState({ name: "Othello" });
 
   // Change this to "guest", "tenant", or "owner" to preview the correct view
-  const [mode] = useState("guest");
+  const [mode] = useState("tenant");
 
   return (
     <Router>

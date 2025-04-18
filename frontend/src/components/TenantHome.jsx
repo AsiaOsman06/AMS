@@ -1,7 +1,37 @@
-import React from "react";
+// TenantHome.jsx
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./TenantHome.css";
 
 const TenantHome = ({ user }) => {
+  const [announcements, setAnnouncements] = useState([]);
+  const [rent, setRent] = useState(null);
+  const [tickets, setTickets] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch announcements
+        const announcementsRes = await axios.get("http://localhost:5002/api/announcements");
+        setAnnouncements(announcementsRes.data);
+
+        // Fetch rent info
+        const rentRes = await axios.get(`http://localhost:5002/api/rent/${user.id}`);
+        setRent(rentRes.data);
+
+        // Fetch maintenance tickets
+        const ticketsRes = await axios.get(`http://localhost:5002/api/tickets/${user.id}`);
+        setTickets(ticketsRes.data);
+      } catch (err) {
+        console.error("Failed to fetch tenant data:", err);
+      }
+    };
+
+    if (user?.id) {
+      fetchData();
+    }
+  }, [user]);
+
   return (
     <div className="tenant-home-container">
       {/* LEFT SIDE */}
@@ -12,74 +42,41 @@ const TenantHome = ({ user }) => {
             {user?.name || "Tenant"}!
           </h2>
         </div>
-        {/* ANNOUNCEMENT */}
+
+        {/* ANNOUNCEMENTS */}
         <div className="announcement-box">
           <h3>Announcements</h3>
-
-          <div className="announcement-entry">
-            <div className="announcement-date">03/20</div>
-            <div className="announcement-message">
-              Tenant gathering in the ballroom at <strong>5:00 PM TONIGHT!</strong><br />
-              Food and drink included!
+          {announcements.map((a, index) => (
+            <div className="announcement-entry" key={index}>
+              <div className="announcement-date">{a.date}</div>
+              <div className="announcement-message">{a.message}</div>
             </div>
-          </div>
-
-          <div className="announcement-entry">
-            <div className="announcement-date">03/18</div>
-            <div className="announcement-message">
-              Remember to move any vehicles off the road before <strong>4:00 PM</strong> to avoid getting towed.
-            </div>
-          </div>
-
-          <div className="announcement-entry">
-            <div className="announcement-date">03/14</div>
-            <div className="announcement-message">
-              2 for 1 special at Culvers!
-            </div>
-          </div>
-
-          <div className="announcement-entry">
-            <div className="announcement-date">03/13</div>
-            <div className="announcement-message">
-              Lost pet: Gracie<br />
-              Cat, short fur, grey and black striped pattern, very friendly. Has a gold medallion around neck with name and phone number to contact. Be on the lookout!
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
       {/* RIGHT SIDE */}
       <div className="right-column">
+        {/* RENT */}
         <div className="rent-box">
           <div className="rent-header">Rent Due</div>
-          <p className="rent-amount">$475</p>
-          <p className="rent-date">04/03</p>
+          <p className="rent-amount">{rent?.amount ? `$${rent.amount}` : "$0"}</p>
+          <p className="rent-date">{rent?.dueDate || "N/A"}</p>
         </div>
 
-        {/* Maintenance Tickets */}
+        {/* MAINTENANCE TICKETS */}
         <div className="tickets-box">
           <div className="tickets-header">Maintenance Tickets</div>
-
-          <div className="ticket-card">
-            <strong>Ticket #000432</strong><br />
-            Subject: Fixing leaking faucet<br />
-            Status: In process...<br />
-            Estimated finish date: 03/21/2025
-          </div>
-
-          <div className="ticket-card">
-            <strong>Ticket #000415</strong><br />
-            Subject: Heat not working<br />
-            Status: Completed<br />
-            Completion date: 02/18/2025
-          </div>
-
-          <div className="ticket-card">
-            <strong>Ticket #000250</strong><br />
-            Subject: Internet not working<br />
-            Status: Completed<br />
-            Completion date: 12/18/2024
-          </div>
+          {tickets.map((ticket) => (
+            <div className="ticket-card" key={ticket.id}>
+              <strong>Ticket #{ticket.id}</strong><br />
+              Subject: {ticket.subject}<br />
+              Status: {ticket.status}<br />
+              {ticket.status === "Completed"
+                ? `Completion date: ${ticket.date}`
+                : `Estimated finish date: ${ticket.date}`}
+            </div>
+          ))}
         </div>
       </div>
 
