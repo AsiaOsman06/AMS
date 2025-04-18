@@ -1,6 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+<<<<<<< HEAD
 import "./GuestNavBar.css";
+=======
+import "./NavBarStyles.css";
+>>>>>>> main
 
 const GuestNavbar = () => {
   return (

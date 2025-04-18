@@ -3,8 +3,6 @@
 /* Full page background fix */
 html, body {
   height: 100%;
-
-
   background-color: #90c8e0; /* Light blue */
 }
 
@@ -110,7 +108,6 @@ width: 20rem;
   border: 3px solid #000000;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
   padding: 1rem 2rem;
-  height: 100%;
 
   margin: 2.5rem;
   font-size: 2rem;
@@ -139,7 +136,9 @@ width: 20rem;
   font-size: 20px;
   height: 100%;
 }
-h2 {
+.description-container h2 {
   font-size: 30px;
   font-weight: Bold;
+  background-color: transparent;
+  color: black;
 }

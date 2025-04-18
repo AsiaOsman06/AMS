@@ -58,7 +58,7 @@ const Contact = () => {
         <div className="contact-container">
           <div className="contact-card">
             <div className="title-container">
-              <h2>Contact Form</h2>
+              Contact Form
             </div>
 
             <form onSubmit={submitTicket}>
