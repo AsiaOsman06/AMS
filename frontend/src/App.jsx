@@ -21,6 +21,7 @@ import Contact from "./components/Contact";
 import Rooms from "./components/Rooms";
 import Home from "./components/Home";
 import MaintenanceForm from "./components/MaintenanceForm";
+import TenantRent from "./components/TenantRent";
 
 import "./styles.css";
 
@@ -56,6 +57,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/maintenanceForm" element={<MaintenanceForm />} />
+          <Route path="/rent" element={<TenantRent />} />
         </Routes>
       </div>
     </Router>

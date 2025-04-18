@@ -25,7 +25,7 @@ const TenantNavBar = ({ user, setUser }) => {
           Maintenance
         </NavLink>
         <NavLink
-          to="/rooms"
+          to="/rent"
           className={({ isActive }) =>
             isActive ? "nav-btn active" : "nav-btn"
           }

@@ -1,0 +1,174 @@
+/* CONTAINER LAYOUT */
+.tenant-rent-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+    background-color: #90c8e0;
+    min-height: 100vh;
+    font-family: 'Agency FB', sans-serif;
+    position: relative;
+  }
+  
+  /* LEFT SIDE: Payment History Box */
+  .payment-history {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    background-color: #e3f3cc;
+    padding: 1.5rem 1rem;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    z-index: 0;
+  }
+  
+  .payment-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background-color: #1e1e2f;
+    color: white;
+    text-align: center;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .payment-entry {
+    margin-bottom: 1rem;
+  }
+  
+  .payment-date {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #000;
+  }
+  
+  .payment-date.highlight {
+    color: orangered;
+  }
+  
+  .payment-amount {
+    background-color: #b6e6b3;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0.6rem;
+    border: 2px solid black;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    width: 90%;
+  }
+  
+  /* RIGHT SIDE: Make Payment Box */
+  .make-payment-box {
+    background-color: #cdeffc;
+    border: 2px solid #00334e;
+    padding: 2rem;
+    width: 350px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    margin-left: 320px;
+  }
+  
+  /* Make Payment Header */
+  .make-payment-header {
+    background-color: #1e1e2f;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  
+  /* Payment Info */
+  .payment-due {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.2rem;
+  }
+  
+  .payment-date-due {
+    font-size: 1rem;
+    color: #444;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  /* FORM FIELD WRAPPER */
+  .form-field {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1.2rem;
+  }
+  
+  /* Label Styling */
+  .form-field label {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-right: 1rem;
+    width: 110px;
+    text-align: right;
+    color: #333;
+  }
+  
+  /* Amount Field (Dollar Box + Input) */
+  .amount-input {
+    display: flex;
+    align-items: center;
+    border: 2px solid #00334e;
+    border-radius: 6px;
+    background-color: #f2f2f2;
+  }
+  
+  .amount-input span {
+    background-color: #c2d6d6;
+    padding: 0.5rem 0.75rem;
+    border-right: 2px solid #00334e;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .amount-input input {
+    padding: 0.5rem;
+    width: 120px;
+    border: none;
+    background-color: transparent;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  /* Password Field */
+  .password-input {
+    padding: 0.5rem;
+    width: 170px;
+    border: 2px solid #00334e;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #f2f2f2;
+  }
+  
+  /* Button Row Centered */
+  .form-button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Authorize Button */
+  form button {
+    background-color: #2b6a93;
+    color: white;
+    font-size: 1.2rem;
+    border: 2px solid #00334e;
+    padding: 0.6rem 2rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.2s;
+  }
+  
+  form button:hover {
+    background-color: #1e4f6e;
+  }
+  
