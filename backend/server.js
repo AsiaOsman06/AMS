@@ -38,8 +38,7 @@ app.use(
 );
 
 // ✅ Handle Preflight (OPTIONS) requests
-// app.options("*", cors());
-
+// app.options("*", cors())T
 // Middleware
 app.use(express.json());
 
