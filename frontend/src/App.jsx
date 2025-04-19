@@ -1,4 +1,4 @@
-// App.jsx
+
 import React, { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -22,6 +22,7 @@ import Rooms from "./components/Rooms";
 import Home from "./components/Home";
 import MaintenanceForm from "./components/MaintenanceForm";
 import TenantRent from "./components/TenantRent";
+import OwnerHome from "./components/OwnerHome"; //  NEW IMPORT
 
 import "./styles.css";
 
@@ -30,7 +31,7 @@ const App = () => {
   const [user, setUser] = useState({ name: "Othello" });
 
   // Change this to "guest", "tenant", or "owner" to preview the correct view
-  const [mode] = useState("tenant");
+  const [mode] = useState("owner");
 
   return (
     <Router>
@@ -45,12 +46,13 @@ const App = () => {
           <Route path="/" element={
             mode === "guest" ? <Navigate to="/home" /> :
             mode === "tenant" ? <Navigate to="/tenant-home" /> :
-            <Navigate to="/home" />
+            <Navigate to="/owner-home" /> //  UPDATED DEFAULT FOR OWNER
           } />
 
           {/* ROUTES */}
           <Route path="/home" element={<Home />} />
           <Route path="/tenant-home" element={<TenantHome user={user} />} />
+          <Route path="/owner-home" element={<OwnerHome user={user} />} /> {/* NEW ROUTE */}
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/register" element={<UserRegister />} />
           <Route path="/apply" element={<Apply />} />
