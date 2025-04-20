@@ -1,0 +1,92 @@
+
+/*  Main container */
+.user-register-box {
+  background-color: #cdeffc;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 2px solid #00334e;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  width: 450px; /* slightly wider */
+  text-align: left;
+
+  justify-self: center;
+  margin-top: 5rem;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    background-color: #1a202c;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+  
+  /*  Form layout */
+  .user-register-box form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /*  First & Last name row */
+  .user-register-box .name-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /*  Inputs */
+  .user-register-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 2px solid #00334e;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  /*  Button */
+  .user-register-box button {
+    width: 100%;
+    padding: 10px;
+    background-color: #1e4b66;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: inset 0px -2px 0px #0f2c3f;
+    transition: background-color 0.3s ease;
+  }
+  
+  .user-register-box button:hover {
+    background-color: #16364b;
+  }
+  
+  /*  Message feedback */
+  .error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .success-message {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  /* Login link under form */
+  .user-register-box .login-link {
+    text-align: center;
+    margin-top: 0.8rem;
+    font-size: 0.95rem;
+  }
+  
+  .user-register-box .login-link a {
+    color: #0044cc;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
