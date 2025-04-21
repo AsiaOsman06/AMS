@@ -7,7 +7,7 @@
     justify-content: space-between;
     align-items: center;
     font-family: "Agency FB", sans-serif;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     box-shadow: 0 5px 6px rgba(0,0,0,0.3);
     outline-width: .3rem;
     outline-Color: black;
@@ -15,7 +15,9 @@
   }
   
   .logo {
-    font-size: 4rem;
+    font-size: 3vw;
+    width: 100%;
+    -ms-flex-align: center;
     font-weight: bold;
     font-style: bold;
   }
@@ -25,7 +27,8 @@
     font-style: bold;
     font-size: 3rem;
     gap: 1rem;
-    flex-wrap: wrap;
+
+    flex-wrap: nowrap;
   }
   
   .nav-btn {
