@@ -21,6 +21,7 @@ import Contact from "./components/Contact";
 import Rooms from "./components/Rooms";
 import Home from "./components/Home";
 import MaintenanceForm from "./components/MaintenanceForm";
+import OwnerTickets from "./components/OwnerTickets";
 
 import "./styles.css";
 
@@ -29,7 +30,7 @@ const App = () => {
   const [user, setUser] = useState({ name: "Othello" });
 
   // Change this to "guest", "tenant", or "owner" to preview the correct view
-  const [mode] = useState("tenant");
+  const [mode] = useState("owner");
 
   return (
     <Router>
@@ -56,6 +57,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/maintenanceForm" element={<MaintenanceForm />} />
+          <Route path="/ownerTickets" element={<OwnerTickets />} />
         </Routes>
       </div>
     </Router>

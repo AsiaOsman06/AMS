@@ -53,24 +53,31 @@ const OwnerTickets = () => {
     fetchTickets();
   }, []);
 
-  const handleAction = (ticketId, action) => {
-    // Code to update ticket in database...
-
+  const updateTicket = async (ticketId, newStatus) => {
+    try {
+      const response = await axios.put(`http://localhost:5002/api/tickets/${ticketId}`, {
+        status: newStatus,
+      });
+  
+      // Update local state with new status
+      setTickets((prevTickets) =>
+        prevTickets.map((ticket) =>
+          ticket.id === ticketId ? { ...ticket, status: newStatus } : ticket
+        )
+      );
+    } catch (error) {
+      console.error("Error updating ticket status:", error);
+    }
   };
 
-
-
-
-
-  
   const renderButtons = (ticket) => {
     const status = ticket.status.toLowerCase();
 
     if (status.includes("in process")) {
       return (
         <>
-            <button className="complete-button" onClick={() => handleAction(ticket.id, "Complete")}>Complete</button>
-            <button className="transition-button" onClick={() => handleAction(ticket.id, "Approved")}>Revert</button>
+            <button className="complete-button" onClick={() => updateTicket(ticket.id, "Complete")}>Complete</button>
+            <button className="transition-button" onClick={() => updateTicket(ticket.id, "Approved")}>Revert</button>
         </>
       );
     }
@@ -78,8 +85,8 @@ const OwnerTickets = () => {
     if (status.includes("awaiting approval")) {
       return (
         <>
-            <button className="transition-button" onClick={() => handleAction(ticket.id, "Approved")}>Approve</button>
-            <button className="reject-button" onClick={() => handleAction(ticket.id, "Reject")}>Reject</button>
+            <button className="transition-button" onClick={() => updateTicket(ticket.id, "Approved")}>Approve</button>
+            <button className="reject-button" onClick={() => updateTicket(ticket.id, "Reject")}>Reject</button>
         </>
       );
     }
@@ -87,8 +94,8 @@ const OwnerTickets = () => {
     if (status.includes("approved")) {
       return (
         <>
-          <button className="transition-button" onClick={() => handleAction(ticket.id, "In-Process")}>In-Process</button>
-          <button className="transition-button" onClick={() => handleAction(ticket.id, "Awaiting Approval")}>Awaiting Approval</button>
+          <button className="transition-button" onClick={() => updateTicket(ticket.id, "In-Process")}>In-Process</button>
+          <button className="transition-button" onClick={() => updateTicket(ticket.id, "Awaiting Approval")}>Awaiting Approval</button>
         </>
       );
     }
