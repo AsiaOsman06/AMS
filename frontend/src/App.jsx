@@ -45,6 +45,7 @@ const App = () => {
           <Route path="/" element={
             mode === "guest" ? <Navigate to="/home" /> :
             mode === "tenant" ? <Navigate to="/tenant-home" /> :
+            mode === "owner" ? <Navigate to="/owner-home" /> :
             <Navigate to="/home" />
           } />
 
