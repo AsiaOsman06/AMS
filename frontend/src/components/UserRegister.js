@@ -17,7 +17,7 @@ const UserRegister = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  //  Handle input change
+  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -52,11 +52,11 @@ const UserRegister = () => {
       <div className="user-register-box">
         <h2>Register</h2>
 
-        {/*  Display error or success */}
+        {/* Display error or success */}
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
 
-        {/*  Registration Form */}
+        {/* Registration Form */}
         <form onSubmit={handleSubmit}>
           <div className="name-row">
             <input
@@ -116,7 +116,7 @@ const UserRegister = () => {
           <button type="submit">Register</button>
         </form>
 
-        {/*  Login Redirect */}
+        {/* Login Redirect */}
         <div className="login-link">
           Already registered? <Link to="/login">Login</Link>
         </div>

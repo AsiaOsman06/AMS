@@ -1,0 +1,50 @@
+.custom-navbar {
+    height:7rem;
+    background-color: #0f1f35;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Agency FB", sans-serif;
+    flex-wrap: wrap;
+    box-shadow: 0 5px 6px rgba(0,0,0,0.3);
+    outline-width: .3rem;
+    outline-Color: black;
+    outline-style: solid;
+  }
+  
+  .logo {
+    font-size: 4rem;
+    font-weight: bold;
+    font-style: bold;
+  }
+  
+  .nav-links {
+    display: flex;
+    font-style: bold;
+    font-size: 3rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .nav-btn {
+    padding: .5rem 1.2rem;
+    background-color: #145374;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 2px solid black;
+    font-size: 2rem;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-btn:hover {
+    box-shadow: 0 0 10px #00ff7f;
+  }
+  
+  .nav-btn.active {
+    background-color: #22c55e;
+    box-shadow: 0 0 10px #22c55e;
+  }
+  /* #endregion */
