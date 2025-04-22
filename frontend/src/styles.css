@@ -23,7 +23,8 @@ body {
 
 .quote-container {
   width: 25%;
-  height: 90vh;
+  min-width: 20rem;
+  min-height: 90vh;
   background-color: #C1E5F5;
 
   outline-width: .3rem;
@@ -52,9 +53,10 @@ body {
 }
 
 .welcome-container {
-  display: flex;
   width: 50%;
-  height: 90vh;
+  min-width: 30rem;
+  margin-top: 9rem;
+  max-height: 50rem;
   justify-content: center; /* horizontal centering */
   align-items: center;
 }

@@ -15,11 +15,14 @@
   }
   
   .logo {
+    display: flex;
     font-size: 3vw;
     width: 100%;
     -ms-flex-align: center;
+    flex-wrap: nowrap;
     font-weight: bold;
     font-style: bold;
+
   }
   
   .nav-links {
@@ -28,7 +31,7 @@
     font-size: 3rem;
     gap: 1rem;
 
-    flex-wrap: nowrap;
+
   }
   
   .nav-btn {

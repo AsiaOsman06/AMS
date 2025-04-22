@@ -41,7 +41,7 @@ const MaintenanceForm = () => {
 
   return (
     <div className="form-container">
-        <div className="Title">Tickets</div>
+        <div className="Title">Ticket</div>
 
         {/*  Display error or success */}
         {error && <p className="error-message">{error}</p>}
@@ -50,37 +50,44 @@ const MaintenanceForm = () => {
         {/*  Registration Form */}
         <form onSubmit={handleSubmit}>
           <div className="form-row">
+            <div className="row-title">Topic:  </div>
+            
             <input
               type="text"
               name="topic"
-              placeholder="topic"
+              placeholder="topic (MAX 30 characters)"
               value={formData.topic}
               onChange={handleChange}
+              maxLength={30}
               required
             />
           </div>
 
           <div className="form-row">
-            <label htmlFor="topic">Topic:</label>
-                <select
-                id="urgency"
-                value={formData.urgency}
-                onChange={handleChange}
-                required
-                >
-                    <option value="urgent">Urgent</option>
-                    <option value="somewhat urgent">Somewhat urgent</option>
-                    <option value="not urgent">Special Accommodations</option>
-                </select>
+            <div className="row-title">Urgency:  </div>
+            
+            <select
+            name="urgency"
+            id="urgency"
+            value={formData.urgency}
+            onChange={handleChange}
+            required
+            >
+                <option value="urgent">Urgent</option>
+                <option value="somewhat urgent">Somewhat urgent</option>
+                <option value="not urgent">Special Accommodations</option>
+            </select>
           </div>
 
-          <div className="form-row">\
-            <input
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                required
+          <div className="form-row">
+            <div className="row-title">Description:  </div>
+
+            <textarea
+              type="text"
+              name="description"
+              placeholder="My faucet is leaking..."
+              value={formData.description}
+              onChange={handleChange}
             />
           </div>
           <button type="submit">Register</button>
