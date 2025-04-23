@@ -1,0 +1,69 @@
+/* TenantNavBar.css */
+
+.tenant-navbar {
+    background-color: #0a1d34;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    font-family: 'Arial Narrow', sans-serif;
+    height: 100px;
+  }
+  
+  .tenant-logo {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .tenant-links {
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+    margin-left: 4rem;
+  }
+  
+  .tenant-tab {
+    background-color: #132e48;
+    border: none;
+    padding: 0.9rem 1.6rem;
+    font-size: 1.3rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .tenant-tab.active {
+    background-color: #4cff79;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .tenant-tab:hover {
+    background-color: #4cff79;
+    color: black;
+    box-shadow: 0 0 8px #4cff79;
+  }
+  
+  .tenant-logout-btn {
+    background-color: #c62828;
+    border: none;
+    padding: 0.9rem 1.6rem;
+    font-size: 1.3rem;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .tenant-logout-btn:hover {
+    background-color: #4cff79;
+    color: black;
+    box-shadow: 0 0 8px #4cff79;
+  }
+  
