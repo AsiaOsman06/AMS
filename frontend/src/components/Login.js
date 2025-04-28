@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, setUserRole }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -11,17 +11,30 @@ const Login = ({ setUser }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("Attempting login...");
     try {
-      const response = await axios.post("http://localhost:5002/api/login", {
+      const response = await axios.post("http://localhost:5002/api/auth/login", {
         email,
         password,
       });
-      setUser(response.data.user);
-      navigate("/");
+      
+      console.log("Login response:", response.data);
+  
+      const { user } = response.data;
+  
+      if (!user) {
+        throw new Error("No user received");
+      }
+  
+      setUser(user);  // ✅ store user in app state
+      setUserRole(user.id === 1 ? "owner" : "tenant");  // ✅ based on id
+      navigate(user.id === 1 ? "/owner-home" : "/tenant-home");  // ✅ redirect
+  
     } catch (error) {
+      console.error("Login error:", error);
       setError("Invalid credentials. Please try again.");
     }
-  };
+  };  
 
   return (
     <div className="login-container">

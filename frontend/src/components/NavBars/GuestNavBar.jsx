@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "./NavBarStyles.css";
 
-const GuestNavbar = () => {
+const GuestNavBar = () => {
   return (
     <nav className="custom-navbar">
       <h1 className="logo">Maple Grove Apartments</h1>
@@ -68,4 +68,4 @@ const GuestNavbar = () => {
   );
 };
 
-export default GuestNavbar;
+export default GuestNavBar;

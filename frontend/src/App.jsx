@@ -29,24 +29,27 @@ import "./styles.css";
 
 const App = () => {
   // Mocked logged-in user
-  const [user, setUser] = useState({ name: "Othello" });
+ // const [user, setUser] = useState({ name: "Othello" });
 
   // Change this to "guest", "tenant", or "owner" to preview the correct view
-  const [mode] = useState("owner");
+  //const [mode] = useState("guest");
+const [user, setUser] = useState(null); // initially no user
+const [userRole, setUserRole] = useState("guest"); // default to guest
+
 
   return (
     <Router>
       {/* NAVBAR BASED ON MODE */}
-      {mode === "guest" && <GuestNavBar />}
-      {mode === "tenant" && <TenantNavBar user={user} setUser={setUser} />}
-      {mode === "owner" && <OwnerNavBar user={user} setUser={setUser} />}
+      {userRole === "guest" && <GuestNavBar />}
+      {userRole === "tenant" && <TenantNavBar user={user} setUser={setUser} setUserRole={setUserRole}/>}
+      {userRole === "owner" && <OwnerNavBar user={user} setUser={setUser} setUserRole={setUserRole}/>}
 
       <div className="main-container">
         <Routes>
           {/* REDIRECT "/" BASED ON MODE */}
           <Route path="/" element={
-            mode === "guest" ? <Navigate to="/home" /> :
-            mode === "tenant" ? <Navigate to="/tenant-home" /> :
+            userRole === "guest" ? <Navigate to="/home" /> :
+            userRole === "tenant" ? <Navigate to="/tenant-home" /> :
             <Navigate to="/owner-home" /> //  UPDATED DEFAULT FOR OWNER
           } />
 
@@ -54,12 +57,12 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/tenant-home" element={<TenantHome user={user} />} />
           <Route path="/owner-home" element={<OwnerHome user={user} />} /> {/* NEW ROUTE */}
-          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/login" element={<Login setUser={setUser} setUserRole={setUserRole} />} />
           <Route path="/register" element={<UserRegister />} />
           <Route path="/apply" element={<Apply />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/rooms" element={<Rooms />} />
-          <Route path="/maintenanceForm" element={<MaintenanceForm />} />
+          <Route path="/maintenanceForm" element={<MaintenanceForm user={user} />} />
           <Route path="/ownerTickets" element={<OwnerTickets />} />
           <Route path="/rent" element={<TenantRent />} />
         </Routes>

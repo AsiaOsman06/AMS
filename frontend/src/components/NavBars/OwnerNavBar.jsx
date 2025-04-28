@@ -1,8 +1,16 @@
 // OwnerNavBar.jsx
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./NavBarStyles.css";
 
-const OwnerNavBar = ({ user, setUser }) => {
+const OwnerNavBar = ({ user, setUser, setUserRole }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setUser && setUser(null);
+    setUserRole && setUserRole("guest"); //safe call
+    navigate("/home"); // Redirect to guest home after logout
+  };
+
   return (
     <nav className="custom-navbar">
       <h1 className="logo">Maple Grove Apartments</h1>
@@ -34,17 +42,19 @@ const OwnerNavBar = ({ user, setUser }) => {
           Rent
         </NavLink>
 
-        <NavLink
-          to="/login"
-          className={({ isActive }) =>
-            isActive ? "nav-btn active logout-btn" : "nav-btn logout-btn"
-          }
+        {/* ✅ Updated logout button */}
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="nav-btn logout-btn"
+          style={{ background: "none", border: "none", cursor: "pointer" }}
         >
           Logout
-        </NavLink>
+        </button>
       </div>
     </nav>
   );
 };
 
 export default OwnerNavBar;
+
