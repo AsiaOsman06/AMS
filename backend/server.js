@@ -14,7 +14,7 @@ const app = express();
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Othello22", // Replace with your actual password
+  password: "Abdifatah1748$$", // Replace with your actual password
   database: "ams_db"
 });
 
