@@ -30,7 +30,7 @@ db.connect((err) => {
 // ✅ Enable CORS properly
 app.use(
   cors({
-    origin: "http://localhost:3003", // Change this if your frontend runs on a different port
+    origin: "http://localhost:3000", // Change this if your frontend runs on a different port
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
