@@ -1,16 +1,28 @@
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 require("dotenv").config();
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'Abdifatah1748$$',
-  database: process.env.DB_NAME || 'ams_db',
+// Create a pool instead of a single connection.
+// Pools handle connections efficiently and expose a promise‐based API.
+const pool = mysql.createPool({
+  host: process.env.DB_HOST     || "localhost",
+  user: process.env.DB_USER     || "root",
+  password: process.env.DB_PASSWORD || "Gatien12?",
+  database: process.env.DB_NAME   || "ams_db",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
-db.connect((err) => {
-  if (err) throw err;
-  console.log("Connected to the MySQL database!");
-});
+// Test the connection once at startup:
+(async () => {
+  try {
+    const conn = await pool.getConnection();
+    console.log("Connected to the MySQL database!");
+    conn.release();
+  } catch (err) {
+    console.error("Database connection failed:", err);
+    process.exit(1);
+  }
+})();
 
-module.exports = db;
+module.exports = pool;

@@ -1,0 +1,210 @@
+.owner-home-container {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    background-color: #99c9e2;
+    font-family: "Agency FB", sans-serif;
+  }
+  
+  /* LEFT SECTION */
+  .left-section {
+    width: 25%;
+    background-color: #e3f4c3;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .full-banner {
+    background-color: #c3e4ff;
+    width: 100%;
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+  
+  .full-banner * {
+    background: none !important;
+  }
+  
+  .welcome-text {
+    font-size: 2rem;
+    color: #13294b;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* ANNOUNCEMENTS */
+  .announcement-section {
+    padding: 1rem;
+  }
+  
+  .announcement-section h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #1e1e2f;
+  }
+  
+  .announcement-section textarea {
+    width: 100%;
+    height: 80px;
+    padding: 0.5rem;
+    border: 2px solid #00334e;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .announce-btn {
+    width: 100%;
+    background-color: #2b6a93;
+    color: white;
+    padding: 0.6rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+  }
+  
+  .announcement-history {
+    padding: 0 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .announcement-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .announcement-date {
+    font-size: 1.2rem;
+    color: #13294b;
+  }
+  
+  .announcement-card {
+    background-color: #c9e9a4;
+    padding: 1rem;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid #00334e;
+  }
+  
+  /* MIDDLE SECTION */
+  .middle-section {
+    width: 38%;
+    display: flex;
+    padding: 1rem;
+  }
+  
+  .middle-container {
+    background-color: #c3e4ff;
+    padding: 1rem;
+    width: 100%;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .income-box {
+    background-color: #d3eefc;
+    padding: 1rem;
+    border: 2px solid #00334e;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .income-header {
+    background-color: #1e1e2f;
+    color: white;
+    font-size: 1.4rem;
+    padding: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .income-amount {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .income-date {
+    font-size: 1rem;
+    color: #444;
+  }
+  
+  .section-header {
+    background-color: #1e1e2f;
+    color: white;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* RIGHT SECTION */
+  .right-section {
+    width: 37%;
+    padding: 1rem;
+  }
+  
+  .right-container {
+    background-color: #c3e4ff;
+    padding: 1rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .ticket {
+    padding: 0.8rem;
+    border: 1px solid #00334e;
+  }
+  
+  .green-box {
+    background-color: #c9e9a4;
+    margin-top: 0.5rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .wide-box {
+    margin-bottom: 1.5rem;
+  }
+  
+  .ticket-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .ticket-actions input[type="text"] {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border: 2px solid #00334e;
+    border-radius: 5px;
+    width: 200px;
+    margin-right: 1rem;
+  }
+  
+  .button-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .approve-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .reject-btn {
+    background-color: #d32f2f;
+    color: white;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  

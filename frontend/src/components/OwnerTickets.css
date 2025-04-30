@@ -1,0 +1,108 @@
+.master-layout {
+    display: flex;
+    flex-direction: row;
+}
+
+.master-container {
+    width: 40rem;
+    min-width: 25rem;
+    padding: 2.5rem;
+    margin: 5rem;
+
+    background-color: #CAEEFB;
+
+    justify-self: center;
+    justify-items: center;
+
+    outline-width: 3px;
+    outline-color: black;
+    outline-style: solid;
+}
+
+.title-container {
+    background-color: #0E2841;
+    width: fit-content;
+    font-size: 4rem;
+    color: white;
+
+    justify-self: center;
+    justify-content: center;    
+
+    padding: .0rem .5rem 0rem .5rem;
+    text-align: center;
+
+    outline-width: 3px;
+    outline-color: black;
+    outline-style: solid;
+    border-radius: 1rem;
+}
+
+.ticket-container {
+    width: 90%;
+    margin: 2rem;
+}
+
+.ticket-number {
+    font-size: 1.5rem;
+}
+
+.ticket-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+
+    background-color: #B4E5A2;
+
+    outline-width: 3px;
+    outline-color: black;
+    outline-style: solid;
+    border-radius: 1rem;
+}
+
+.ticket-details {
+    font: bold 1rem;
+    margin: .2rem;
+    margin-left: .8rem;
+
+    justify-self: left;
+}
+
+.ticket-details p {
+
+    font-size: 1.2rem;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+
+    align-self: center;
+}
+
+button {
+    margin-right: 2.5rem;
+    padding: .5rem;
+    font-weight: bold;
+    margin-bottom: .5rem;
+    color: white;
+    width: 8rem;
+    font-size: 1.5rem;
+
+    outline-width: 1px;
+    outline-color: black;
+    outline-style: solid;
+    border-radius: .5rem;
+}
+
+.complete-button {
+    background-color: #2DBD42;
+}
+
+.reject-button {
+    background-color: #BD1919;
+}
+
+.transition-button {
+    background-color: #104862;
+}
