@@ -1,9 +1,16 @@
 // TenantNavBar.jsx
-
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./NavBarStyles.css";
 
-const TenantNavBar = ({ user, setUser }) => {
+const TenantNavBar = ({ user, setUser, setUserRole }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setUser && setUser(null);
+    setUserRole && setUserRole("guest");
+    navigate("/home"); // Redirect to guest home after logout
+  };
+
   return (
     <nav className="custom-navbar">
       <h1 className="logo">Maple Grove Apartments</h1>
@@ -16,6 +23,7 @@ const TenantNavBar = ({ user, setUser }) => {
         >
           Home
         </NavLink>
+
         <NavLink
           to="/maintenanceForm"
           className={({ isActive }) =>
@@ -24,8 +32,9 @@ const TenantNavBar = ({ user, setUser }) => {
         >
           Maintenance
         </NavLink>
+
         <NavLink
-          to="/rooms"
+          to="/rent"
           className={({ isActive }) =>
             isActive ? "nav-btn active" : "nav-btn"
           }
@@ -33,14 +42,15 @@ const TenantNavBar = ({ user, setUser }) => {
           Rent
         </NavLink>
 
-        {user ? (
+        {user && (
           <button
-            onClick={() => setUser(null)}
+            onClick={handleLogout}
             className="tenant-logout-btn"
+            style={{ background: "none", border: "none", cursor: "pointer" }}
           >
             Logout
           </button>
-        ) : null}
+        )}
       </div>
     </nav>
   );
