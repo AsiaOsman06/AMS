@@ -29,7 +29,7 @@ app.use(express.json());
 const pool = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "Gatien12?", // your password
+  password: "Abdifatah1748$$", // your password
   database: "ams_db",
   waitForConnections: true,
   connectionLimit: 10,
@@ -236,6 +236,71 @@ app.post("/api/submitTicket", async (req, res) => {
     res.status(500).json({ error: "Database error" });
   }
 });
+
+app.get("/api/rooms", async (req, res) => {
+  const { bedrooms, bathrooms, floor, minPrice, maxPrice } = req.query;
+
+  let sql =
+    "SELECT * FROM RentalUnitRoom WHERE availabilityStatus = 'available'";
+  const values = [];
+
+  if (bedrooms) {
+    sql += " AND numBedrooms = ?";
+    values.push(bedrooms);
+  }
+  if (bathrooms) {
+    sql += " AND numBathrooms = ?";
+    values.push(bathrooms);
+  }
+  if (floor) {
+    sql += " AND floor = ?";
+    values.push(floor);
+  }
+  if (minPrice && maxPrice) {
+    sql += " AND rentAmount BETWEEN ? AND ?";
+    values.push(minPrice, maxPrice);
+  }
+
+  try {
+    const [results] = await pool.query(sql, values);
+    res.json(results);
+  } catch (err) {
+    console.error("Room filter error:", err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+app.get("/api/room-details/:roomNumber", async (req, res) => {
+  const { roomNumber } = req.params;
+  try {
+    const [rows] = await pool.query(
+      "SELECT apartmentID, squareFeet, minRent, maxRent FROM RoomAvailability WHERE roomNumber = ?",
+      [roomNumber]
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error("Room availability error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.get("/api/tenant-rent/:tenantId", async (req, res) => {
+  const { tenantId } = req.params;
+  try {
+    const [result] = await pool.query(
+      "SELECT rent_due FROM tenants WHERE id = ?",
+      [tenantId]
+    );
+    if (result.length === 0) {
+      return res.status(404).json({ error: "Tenant not found" });
+    }
+    res.json({ rentDue: result[0].rent_due });
+  } catch (err) {
+    console.error("Error fetching rent:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 
 // ✅ Start server after checking DB connection

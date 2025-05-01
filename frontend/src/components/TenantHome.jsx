@@ -1,4 +1,3 @@
-// TenantHome.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./TenantHome.css";
@@ -12,15 +11,21 @@ const TenantHome = ({ user }) => {
     const fetchData = async () => {
       try {
         // Fetch announcements
-        const announcementsRes = await axios.get("http://localhost:5002/api/announcements");
+        const announcementsRes = await axios.get(
+          "http://localhost:5002/api/announcements"
+        );
         setAnnouncements(announcementsRes.data);
 
         // Fetch rent info
-        const rentRes = await axios.get(`http://localhost:5002/api/rent/${user.id}`);
+        const rentRes = await axios.get(
+          `http://localhost:5002/api/rent/${user.id}`
+        );
         setRent(rentRes.data);
 
         // Fetch maintenance tickets
-        const ticketsRes = await axios.get(`http://localhost:5002/api/tickets/${user.id}`);
+        const ticketsRes = await axios.get(
+          `http://localhost:5002/api/tickets/${user.id}`
+        );
         setTickets(ticketsRes.data);
       } catch (err) {
         console.error("Failed to fetch tenant data:", err);
@@ -38,7 +43,8 @@ const TenantHome = ({ user }) => {
       <div className="left-column">
         <div className="welcome-box">
           <h2>
-            Welcome back,<br />
+            Welcome back,
+            <br />
             {user?.name || "Tenant"}!
           </h2>
         </div>
@@ -60,8 +66,16 @@ const TenantHome = ({ user }) => {
         {/* RENT */}
         <div className="rent-box">
           <div className="rent-header">Rent Due</div>
-          <p className="rent-amount">{rent?.amount ? `$${rent.amount}` : "$0"}</p>
-          <p className="rent-date">{rent?.dueDate || "N/A"}</p>
+          <p className="rent-amount">
+            {rent?.amount !== undefined
+              ? `$${parseFloat(rent.amount).toFixed(2)}`
+              : "$0.00"}
+          </p>
+          <p className="rent-date">
+            {rent?.dueDate
+              ? `Due by: ${new Date(rent.dueDate).toLocaleDateString()}`
+              : "N/A"}
+          </p>
         </div>
 
         {/* MAINTENANCE TICKETS */}
@@ -69,9 +83,12 @@ const TenantHome = ({ user }) => {
           <div className="tickets-header">Maintenance Tickets</div>
           {tickets.map((ticket) => (
             <div className="ticket-card" key={ticket.id}>
-              <strong>Ticket #{ticket.id}</strong><br />
-              Subject: {ticket.subject}<br />
-              Status: {ticket.status}<br />
+              <strong>Ticket #{ticket.id}</strong>
+              <br />
+              Subject: {ticket.subject}
+              <br />
+              Status: {ticket.status}
+              <br />
               {ticket.status === "Completed"
                 ? `Completion date: ${ticket.date}`
                 : `Estimated finish date: ${ticket.date}`}
@@ -83,10 +100,14 @@ const TenantHome = ({ user }) => {
       {/* SUPPORT SECTION */}
       <div className="support-section">
         <div className="support-text">
-          For any questions or issues<br />
-          about the Maple Grove<br />
-          Apartments AMS software,<br />
-          please contact <span>AMS@gmail.com</span><br />
+          For any questions or issues
+          <br />
+          about the Maple Grove
+          <br />
+          Apartments AMS software,
+          <br />
+          please contact <span>AMS@gmail.com</span>
+          <br />
           for support
         </div>
       </div>

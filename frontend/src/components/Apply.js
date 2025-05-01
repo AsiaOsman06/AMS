@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Added for navigation
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { useNavigate} from "react-router-dom";
 import "./Apply.css";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -18,7 +20,21 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate();
+
+  // ✅ Populate fields if redirected with query params
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const building = params.get("building");
+    const room = params.get("room");
+
+    if (building || room) {
+      setFormData((prev) => ({
+        ...prev,
+        building: building || prev.building,
+        room: room || prev.room,
+      }));
+    }
+  }, [location.search]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,10 +46,12 @@ const Register = () => {
     setSuccess("");
 
     try {
-      const response = await axios.post("http://localhost:5002/api/applications", formData);
+      const response = await axios.post(
+        "http://localhost:5002/api/applications",
+        formData
+      );
       setSuccess(response.data.message);
 
-      // Reset form after successful submission
       setFormData({
         firstName: "",
         lastName: "",
@@ -45,17 +63,16 @@ const Register = () => {
         accommodations: "",
       });
 
-      // Redirect user to a different page after successful submission (optional)
       setTimeout(() => navigate("/"), 2000);
     } catch (error) {
-      setError(error.response?.data?.error || "An error occurred. Please try again.");
+      setError(
+        error.response?.data?.error || "An error occurred. Please try again."
+      );
     }
   };
 
   return (
     <div className="register-layout">
-      {/* ✅ Top nav bar inside the register page */}
-
       <div className="info-box">
         <p>
           For any questions or comments regarding Maple Grove Apartments, please
@@ -67,6 +84,7 @@ const Register = () => {
         <h2>Application Form</h2>
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
+
         <form onSubmit={handleSubmit}>
           <div style={{ display: "flex", gap: "1rem" }}>
             <div style={{ flex: 1 }}>
@@ -100,7 +118,7 @@ const Register = () => {
             type="email"
             name="email"
             value={formData.email}
-            placeholder="JohnSmith@gmail.com"
+            placeholder="john.smith@example.com"
             onChange={handleChange}
             className="register-input"
             required
@@ -129,6 +147,7 @@ const Register = () => {
               >
                 <option value="Room 145">Room 145</option>
                 <option value="Room 203">Room 203</option>
+                <option value="Room 302">Room 302</option>
               </select>
             </div>
           </div>
@@ -152,7 +171,7 @@ const Register = () => {
                 type="text"
                 name="licenseNumber"
                 value={formData.licenseNumber}
-                placeholder="A123-456-789-123"
+                placeholder="A123-456-789"
                 onChange={handleChange}
                 className="register-input"
                 required
@@ -163,7 +182,7 @@ const Register = () => {
           <label>Accommodations (Optional):</label>
           <textarea
             name="accommodations"
-            placeholder="Wheelchair accessibility, financial assistance..."
+            placeholder="Any special requests?"
             value={formData.accommodations}
             onChange={handleChange}
             className="register-input"
@@ -180,3 +199,4 @@ const Register = () => {
 };
 
 export default Register;
+ 
