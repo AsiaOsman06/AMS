@@ -24,6 +24,8 @@ import MaintenanceForm from "./components/MaintenanceForm";
 import TenantRent from "./components/TenantRent";
 import OwnerTickets from "./components/OwnerTickets";
 import OwnerHome from "./components/OwnerHome"; //  NEW IMPORT
+import RoomDetails from "./components/RoomDetails"; // NEW IMPORT
+
 
 import "./styles.css";
 
@@ -41,27 +43,42 @@ const [userRole, setUserRole] = useState("guest"); // default to guest
     <Router>
       {/* NAVBAR BASED ON MODE */}
       {userRole === "guest" && <GuestNavBar />}
-      {userRole === "tenant" && <TenantNavBar user={user} setUser={setUser} setUserRole={setUserRole}/>}
-      {userRole === "owner" && <OwnerNavBar user={user} setUser={setUser} setUserRole={setUserRole}/>}
+      {userRole === "tenant" && (
+        <TenantNavBar user={user} setUser={setUser} setUserRole={setUserRole} />
+      )}
+      {userRole === "owner" && (
+        <OwnerNavBar user={user} setUser={setUser} setUserRole={setUserRole} />
+      )}
 
       <div className="main-container">
         <Routes>
           {/* REDIRECT "/" BASED ON MODE */}
-          <Route path="/" element={
-            userRole === "guest" ? <Navigate to="/home" /> :
-            userRole === "tenant" ? <Navigate to="/tenant-home" /> :
-            <Navigate to="/owner-home" /> //  UPDATED DEFAULT FOR OWNER
-          } />
-
+          <Route
+            path="/"
+            element={
+              userRole === "guest" ? (
+                <Navigate to="/home" />
+              ) : userRole === "tenant" ? (
+                <Navigate to="/tenant-home" />
+              ) : (
+                <Navigate to="/owner-home" />
+              ) //  UPDATED DEFAULT FOR OWNER
+            }
+          />
           {/* ROUTES */}
           <Route path="/home" element={<Home />} />
           <Route path="/tenant-home" element={<TenantHome user={user} />} />
-          <Route path="/owner-home" element={<OwnerHome user={user} />} /> {/* NEW ROUTE */}
-          <Route path="/login" element={<Login setUser={setUser} setUserRole={setUserRole} />} />
+          <Route path="/owner-home" element={<OwnerHome user={user} />} />{" "}
+          {/* NEW ROUTE */}
+          <Route
+            path="/login"
+            element={<Login setUser={setUser} setUserRole={setUserRole} />}
+          />
           <Route path="/register" element={<UserRegister />} />
           <Route path="/apply" element={<Apply />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/rooms" element={<Rooms />} />
+          <Route path="/room-details/:roomNumber" element={<RoomDetails />} />
           <Route path="/maintenanceForm" element={<MaintenanceForm user={user} />} />
           <Route path="/ownerTickets" element={<OwnerTickets />} />
           <Route path="/rent" element={<TenantRent />} />

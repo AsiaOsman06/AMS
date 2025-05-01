@@ -1,155 +1,135 @@
-/* TenantHome.css */
-
 .tenant-home-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: stretch;
-    height: calc(100vh - 80px);
-    background-color: #90c8e0;
-    font-family: 'Arial Narrow', sans-serif;
-    padding: 1rem;
-    box-sizing: border-box;
-  }
-  
-  /* LEFT COLUMN */
-  .left-column {
-    display: flex;
-    flex-direction: column;
-    width: 320px;
-    margin-right: 1rem;
-  }
-  
-  .welcome-box {
-    background-color: #cdeffc;
-    padding: 1.2rem;
-    font-size: 2.1rem;
-    font-weight: bold;
-    color: #0f1f35;
-    border: 2px solid #0f1f35;
-    margin-bottom: 1rem;
-    height: 140px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .announcement-box {
-    background-color: #e7f4d8;
-    border: 2px solid #0f1f35;
-    padding: 1rem;
-    overflow-y: auto;
-    flex: 1;
-  }
-  
-  .announcement-box h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #1e1e1e;
-  }
-  
-  /* ANNOUNCEMENT STYLES */
-  .announcement-entry {
-    margin-bottom: 1.5rem;
-  }
-  
-  .announcement-date {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #1e1e1e;
-    margin-bottom: 0.3rem;
-  }
-  
-  .announcement-message {
-    background-color: #b6e6b3;
-    padding: 0.8rem 1rem;
-    border: 2px solid #00334e;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-  
-  /* RIGHT COLUMN */
-  .right-column {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    margin-right: 2rem;
-  }
-  
-  /* Rent Box */
-  .rent-box {
-    background-color: #cdeffc;
-    border: 2px solid #00334e;
-    text-align: center;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .rent-header {
-    background-color: #0f1f35;
-    color: white;
-    padding: 0.4rem;
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin-bottom: 0.4rem;
-  }
-  
-  .rent-amount {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin: 0;
-  }
-  
-  .rent-date {
-    font-size: 1rem;
-    margin-top: 0.3rem;
-  }
-  
-  /* Maintenance Tickets */
-  .tickets-box {
-    background-color: #cdeffc;
-    border: 2px solid #00334e;
-    padding: 1rem;
-    flex: 1;
-  }
-  
-  .tickets-header {
-    background-color: #0f1f35;
-    color: white;
-    padding: 0.4rem;
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
-  .ticket-card {
-    background-color: #b6e6b3;
-    border: 2px solid #00334e;
-    padding: 0.75rem;
-    margin-bottom: 0.8rem;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
-    font-size: 1rem;
-  }
-  
-  /* SUPPORT SECTION */
-  .support-section {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-  }
-  
-  .support-text {
-    font-size: 1.6rem;
-    font-weight: bold;
-    text-align: center;
-    color: #0f1f35;
-    line-height: 1.6;
-  }
-  
-  .support-text span {
-    color: #345;
-    text-decoration: underline;
-  }
-  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* LEFT COLUMN */
+.left-column {
+  flex: 1;
+}
+
+.welcome-box {
+  background-color: #f1f9ff;
+  padding: 1.5rem;
+  border-left: 6px solid #365d7d;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.welcome-box h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.announcement-box {
+  background-color: #fffef3;
+  border: 1px solid #ece8aa;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.announcement-box h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.announcement-entry {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.announcement-date {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.announcement-message {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* RIGHT COLUMN */
+.right-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* RENT BOX */
+.rent-box {
+  background-color: #e9f7ff;
+  border: 1px solid #a5d6f8;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.rent-header {
+  background-color: #1a1e2d;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.rent-amount {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #007bff;
+  margin: 0;
+}
+
+.rent-date {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* TICKETS BOX */
+.tickets-box {
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.tickets-header {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.ticket-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* SUPPORT */
+.support-section {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.support-text {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.support-text span {
+  font-weight: bold;
+  color: #365d7d;
+}
