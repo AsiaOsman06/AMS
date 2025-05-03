@@ -42,6 +42,16 @@ const OwnerNavBar = ({ user, setUser, setUserRole }) => {
           Rent
         </NavLink>
 
+        {/* ✅ NEW: Applications link */}
+        <NavLink
+          to="/owner-applications"
+          className={({ isActive }) =>
+            isActive ? "nav-btn active" : "nav-btn"
+          }
+        >
+          Applications
+        </NavLink>
+
         {/* ✅ Updated logout button */}
         <button
           type="button"
@@ -57,4 +67,3 @@ const OwnerNavBar = ({ user, setUser, setUserRole }) => {
 };
 
 export default OwnerNavBar;
-

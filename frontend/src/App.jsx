@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -25,19 +24,13 @@ import TenantRent from "./components/TenantRent";
 import OwnerTickets from "./components/OwnerTickets";
 import OwnerHome from "./components/OwnerHome"; //  NEW IMPORT
 import RoomDetails from "./components/RoomDetails"; // NEW IMPORT
-
+import OwnerApplications from "./components/OwnerApplications"; // ✅ NEW IMPORT
 
 import "./styles.css";
 
 const App = () => {
-  // Mocked logged-in user
- // const [user, setUser] = useState({ name: "Othello" });
-
-  // Change this to "guest", "tenant", or "owner" to preview the correct view
-  //const [mode] = useState("guest");
-const [user, setUser] = useState(null); // initially no user
-const [userRole, setUserRole] = useState("guest"); // default to guest
-
+  const [user, setUser] = useState(null); // initially no user
+  const [userRole, setUserRole] = useState("owner"); // default to owner
 
   return (
     <Router>
@@ -62,14 +55,13 @@ const [userRole, setUserRole] = useState("guest"); // default to guest
                 <Navigate to="/tenant-home" />
               ) : (
                 <Navigate to="/owner-home" />
-              ) //  UPDATED DEFAULT FOR OWNER
+              )
             }
           />
           {/* ROUTES */}
           <Route path="/home" element={<Home />} />
           <Route path="/tenant-home" element={<TenantHome user={user} />} />
-          <Route path="/owner-home" element={<OwnerHome user={user} />} />{" "}
-          {/* NEW ROUTE */}
+          <Route path="/owner-home" element={<OwnerHome user={user} />} />
           <Route
             path="/login"
             element={<Login setUser={setUser} setUserRole={setUserRole} />}
@@ -82,6 +74,8 @@ const [userRole, setUserRole] = useState("guest"); // default to guest
           <Route path="/maintenanceForm" element={<MaintenanceForm user={user} />} />
           <Route path="/ownerTickets" element={<OwnerTickets />} />
           <Route path="/rent" element={<TenantRent />} />
+          {/* ✅ NEW: Owner Applications route */}
+          <Route path="/owner-applications" element={<OwnerApplications />} />
         </Routes>
       </div>
     </Router>
