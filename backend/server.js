@@ -2,10 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mysql = require("mysql2/promise");
+const multer = require("multer");
+const path = require("path");
 const bcrypt = require("bcryptjs");
 const tenantRoutes = require("./routes/tenantRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
+const ticketRoutes = require('./routes/tickets');
+
 
 // Load environment variables
 dotenv.config();
@@ -37,9 +41,12 @@ const pool = mysql.createPool({
 });
 
 // ✅ Routes
+app.use("/uploads", express.static("uploads"));
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", tenantRoutes);
+app.use('/api/tickets', ticketRoutes);
+app.use('/api/tickets', require('./routes/tickets'));
 
 // Dummy data: Maintenance staff list
 const maintenanceStaff = [
@@ -48,6 +55,19 @@ const maintenanceStaff = [
   { id: 3, name: "Technician3" },
   { id: 4, name: "Technician4" },
 ];
+
+//Configure storage for uploaded image
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Make sure this folder exists
+  },
+  filename: function (req, file, cb) {
+    const uniqueName = Date.now() + "_" + file.originalname;
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // Route to get maintenance staff
 app.get("/api/maintenanceStaff", (req, res) => {
@@ -206,19 +226,19 @@ app.post("/api/applications", async (req, res) => {
   }
 });
 
-// ✅ API: Submit Maintenance Ticket (Corrected Version)
-app.post("/api/submitTicket", async (req, res) => {
+// ✅ API: Submit Maintenance Ticket with optional image
+app.post("/api/submitTicket", upload.single("image"), async (req, res) => {
   const { topic, urgency, description, assignedTo, createdBy } = req.body;
+  const image = req.file ? req.file.filename : null;
 
-  // Corrected validation
   if (!topic || !urgency || !description || !assignedTo || !createdBy) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
   try {
     const query = `
-      INSERT INTO tickets (topic, urgency, description, assignedTo, createdBy, status, createdAt)
-      VALUES (?, ?, ?, ?, ?, ?, NOW())
+      INSERT INTO tickets (topic, urgency, description, assignedTo, createdBy, status, image, createdAt)
+      VALUES (?, ?, ?, ?, ?, ?, ?, NOW())
     `;
 
     await pool.query(query, [
@@ -227,7 +247,8 @@ app.post("/api/submitTicket", async (req, res) => {
       description,
       assignedTo,
       createdBy,
-      'Pending'  // Default status when ticket is created
+      'Pending',
+      image
     ]);
 
     res.status(201).json({ message: "Ticket submitted successfully" });
@@ -237,6 +258,82 @@ app.post("/api/submitTicket", async (req, res) => {
   }
 });
 
+// GET announcements
+app.get("/api/announcements", async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT * FROM announcements ORDER BY date DESC");
+    res.json(rows);
+  } catch (err) {
+    console.error("Failed to fetch announcements:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// POST announcement
+app.post("/api/announcements", async (req, res) => {
+  const { message } = req.body;
+  if (!message) {
+    return res.status(400).json({ error: "Message is required" });
+  }
+
+  try {
+    await pool.query("INSERT INTO announcements (message) VALUES (?)", [message]);
+    res.status(201).json({ message: "Announcement posted successfully" });
+  } catch (err) {
+    console.error("Failed to post announcement:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Endpoint to fetch tickets for a specific tenant
+app.get("/api/tickets/:tenantId", async (req, res) => {
+  const { tenantId } = req.params;
+
+  try {
+    const [tickets] = await pool.query(
+      `SELECT id, topic, urgency, description, assignedTo, status, createdAt
+       FROM tickets
+       WHERE createdBy = ?`,
+      [tenantId]
+    );
+
+    res.json(tickets);
+  } catch (err) {
+    console.error("Error fetching tickets:", err);
+    res.status(500).json({ error: "Failed to retrieve maintenance tickets." });
+  }
+});
+
+//fetching all the tickets that are not completed to display to the Owner.
+app.get('/api/owner-tickets', async (req, res) => {
+  try {
+    const [rows] = await pool.execute(`
+      SELECT 
+    tickets.topic AS Topic,
+    tickets.description AS Subject,
+    tenants.name AS TenantName,
+    existingTenant.building AS Building,
+    existingTenant.room AS Room,
+    tickets.assignedTo AS AssignedTo,
+    tickets.status AS Status,
+    tickets.createdAt AS DateCreated,
+    tickets.image AS Image,
+    tickets.id AS TicketID
+FROM 
+    tickets
+JOIN 
+    tenants ON tickets.createdBy = tenants.id
+JOIN 
+    existingTenant ON tenants.id = existingTenant.id
+WHERE 
+        tickets.status != 'Completed';
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error("Error fetching tickets for owner:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 // ✅ Start server after checking DB connection
 async function startServer() {

@@ -1,15 +1,61 @@
 import React, { useEffect, useState } from "react";
 import "./OwnerHome.css";
+import axios from "axios";
 
 const OwnerHome = () => {
+  const [newAnnouncement, setNewAnnouncement] = useState("");
   const [announcements, setAnnouncements] = useState([]);
-  const [inProcessTickets, setInProcessTickets] = useState([]);
-  const [newTickets, setNewTickets] = useState([]);
+  const [completedTickets, setCompletedTickets] = useState([]); // <-- corrected state name
   const [expectedIncome, setExpectedIncome] = useState("");
   const [incomeDate, setIncomeDate] = useState("");
 
+  // Fetch announcements
+  const fetchAnnouncements = async () => {
+    try {
+      const res = await axios.get("http://localhost:5002/api/announcements");
+      setAnnouncements(res.data);
+    } catch (err) {
+      console.error("Error fetching announcements", err);
+    }
+  };
+
+  // Fetch completed tickets
+  const fetchCompletedTickets = async () => {
+    try {
+      const res = await axios.get("http://localhost:5002/api/tickets/completed");
+      const formatted = res.data.map((ticket) => ({
+        id: ticket.id,
+        subject: ticket.topic,
+        description: ticket.description,
+        tenant: ticket.tenant, // update if available in data
+        building: ticket.building,
+        room: ticket.room,
+        submitted: new Date(ticket.createdAt).toLocaleDateString(),
+      }));
+      setCompletedTickets(formatted);
+    } catch (err) {
+      console.error("Error fetching completed tickets", err);
+    }
+  };
+
+  // Post new announcement
+  const handleAnnounce = async () => {
+    if (!newAnnouncement.trim()) return;
+
+    try {
+      await axios.post("http://localhost:5002/api/announcements", {
+        message: newAnnouncement,
+      });
+      setNewAnnouncement("");
+      fetchAnnouncements(); // refresh list
+    } catch (err) {
+      console.error("Error posting announcement", err);
+    }
+  };
+
   useEffect(() => {
-    // When backend is read
+    fetchAnnouncements();
+    fetchCompletedTickets(); // <-- fetch on load
   }, []);
 
   return (
@@ -22,8 +68,12 @@ const OwnerHome = () => {
 
         <div className="announcement-section">
           <h3>Announcements</h3>
-          <textarea placeholder="Type new announcement..." />
-          <button className="announce-btn">Announce</button>
+          <textarea
+            placeholder="Type new announcement..."
+            value={newAnnouncement}
+            onChange={(e) => setNewAnnouncement(e.target.value)}
+          />
+          <button className="announce-btn" onClick={handleAnnounce}>Announce</button>
         </div>
 
         <div className="announcement-history">
@@ -50,55 +100,25 @@ const OwnerHome = () => {
             <div className="income-amount">{expectedIncome || "—"}</div>
             <div className="income-date">{incomeDate || "--/--"}</div>
           </div>
-
-          <div className="in-process-tickets">
-            <div className="section-header">In Process Tickets</div>
-            {inProcessTickets.length === 0 ? (
-              <p style={{ paddingLeft: "1rem" }}>No in-process tickets.</p>
-            ) : (
-              inProcessTickets.map((ticket) => (
-                <div className="ticket green-box" key={ticket.id}>
-                  <strong>Ticket #{ticket.id}</strong>
-                  <p>Subject: {ticket.subject}</p>
-                  <p>Tenant: {ticket.tenant}</p>
-                  <p>Building: {ticket.building} | Room: {ticket.room}</p>
-                  <p>Status: {ticket.status}</p>
-                  <p>Estimated finish date: {ticket.completion}</p>
-                </div>
-              ))
-            )}
-          </div>
         </div>
       </div>
 
       {/* RIGHT SECTION */}
       <div className="right-section">
         <div className="right-container">
-          <div className="section-header">New tickets</div>
-          {newTickets.length === 0 ? (
-            <p style={{ paddingLeft: "1rem" }}>No new tickets available.</p>
+          <div className="section-header">Completed tickets</div>
+          {completedTickets.length === 0 ? (
+            <p style={{ paddingLeft: "1rem" }}>No completed tickets yet.</p>
           ) : (
-            newTickets.map((ticket) => (
+            completedTickets.map((ticket) => (
               <div className="ticket green-box wide-box" key={ticket.id}>
                 <strong>Ticket #{ticket.id}</strong>
-                <p>Subject: {ticket.subject}</p>
+                <p>Topic: {ticket.subject}</p>
+                <p>Description: {ticket.description}</p>
                 <p>Tenant: {ticket.tenant}</p>
-                <p>Building: {ticket.building} | Room: {ticket.room}</p>
+                <p>Building: {ticket.building}</p>
+                <p>Room: {ticket.room}</p>
                 <p>Submit date: {ticket.submitted}</p>
-                <div className="ticket-actions">
-                  <label htmlFor={`completion-${ticket.id}`}>
-                    Estimated completion:
-                  </label>
-                  <input
-                    id={`completion-${ticket.id}`}
-                    type="text"
-                    placeholder="MM/DD/YYYY"
-                  />
-                  <div className="button-row">
-                    <button className="approve-btn">Approve</button>
-                    <button className="reject-btn">Reject</button>
-                  </div>
-                </div>
               </div>
             ))
           )}

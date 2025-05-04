@@ -1,108 +1,87 @@
-.master-layout {
-    display: flex;
-    flex-direction: row;
-}
-
-.master-container {
-    width: 40rem;
-    min-width: 25rem;
-    padding: 2.5rem;
-    margin: 5rem;
-
-    background-color: #CAEEFB;
-
-    justify-self: center;
-    justify-items: center;
-
-    outline-width: 3px;
-    outline-color: black;
-    outline-style: solid;
-}
-
-.title-container {
-    background-color: #0E2841;
-    width: fit-content;
-    font-size: 4rem;
-    color: white;
-
-    justify-self: center;
-    justify-content: center;    
-
-    padding: .0rem .5rem 0rem .5rem;
+.owner-tickets-container {
+    padding: 2rem;
+    background-color: #f0f8ff;
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .title {
+    font-size: 2.5rem;
     text-align: center;
-
-    outline-width: 3px;
-    outline-color: black;
-    outline-style: solid;
-    border-radius: 1rem;
-}
-
-.ticket-container {
-    width: 90%;
-    margin: 2rem;
-}
-
-.ticket-number {
-    font-size: 1.5rem;
-}
-
-.ticket-card {
-    display: flex;
-    flex-direction: row;
+    margin-bottom: 2rem;
+    color: #023e8a;
+  }
+  
+  .tickets-table {
     width: 100%;
-    justify-content: space-between;
-
-    background-color: #B4E5A2;
-
-    outline-width: 3px;
-    outline-color: black;
-    outline-style: solid;
-    border-radius: 1rem;
-}
-
-.ticket-details {
-    font: bold 1rem;
-    margin: .2rem;
-    margin-left: .8rem;
-
-    justify-self: left;
-}
-
-.ticket-details p {
-
-    font-size: 1.2rem;
-}
-
-.button-container {
-    display: flex;
-    flex-direction: column;
-
-    align-self: center;
-}
-
-button {
-    margin-right: 2.5rem;
-    padding: .5rem;
-    font-weight: bold;
-    margin-bottom: .5rem;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tickets-table th,
+  .tickets-table td {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  .tickets-table th {
+    background-color: #0077b6;
     color: white;
-    width: 8rem;
-    font-size: 1.5rem;
-
-    outline-width: 1px;
-    outline-color: black;
-    outline-style: solid;
-    border-radius: .5rem;
-}
-
-.complete-button {
-    background-color: #2DBD42;
-}
-
-.reject-button {
-    background-color: #BD1919;
-}
-
-.transition-button {
+    font-weight: bold;
+  }
+  
+  .tickets-table tr:nth-child(even) {
+    background-color: #f1f9ff;
+  }
+  
+  .tickets-table tr:hover {
+    background-color: #e0f2ff;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 600;
+  }
+  
+  .complete-button {
+    background-color: #2dbd42;
+    color: white;
+  }
+  
+  .complete-button:hover {
+    background-color: #24a138;
+  }
+  
+  .reject-button {
+    background-color: #bd1919;
+    color: white;
+  }
+  
+  .reject-button:hover {
+    background-color: #a31717;
+  }
+  
+  .transition-button {
     background-color: #104862;
-}
+    color: white;
+  }
+  
+  .transition-button:hover {
+    background-color: #0d3b52;
+  }
+  

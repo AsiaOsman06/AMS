@@ -1,49 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./OwnerTickets.css";
+import { useNavigate } from "react-router-dom";
 
 const OwnerTickets = () => {
-  const [tickets, setTickets] = useState([
-    //DELETE THIS REGION OF CODE IN ACTUAL USE
-    //#region
-    {
-        id: 1,
-        ticketNumber: "000431",
-        subject: "Fixing leaking faucet",
-        tenant: "John Smith",
-        building: "3",
-        room: "534",
-        status: "In process...",
-        finishDate: "03/21/2025"
-    },
-    {
-        id: 2,
-        ticketNumber: "000433",
-        subject: "Fixing broken heater",
-        tenant: "Jake Long",
-        building: "2",
-        room: "153",
-        status: "Approved",
-        finishDate: "03/23/2025"
-    },
-    {
-        id: 3,
-        ticketNumber: "000431",
-        subject: "Fixing leaking faucet",
-        tenant: "John Smith",
-        building: "3",
-        room: "534",
-        status: "Awaiting Approval",
-        finishDate: "03/21/2025"
-    }
-    //#endregion
-  ]);
+  const [tickets, setTickets] = useState([]);
+  const navigate = useNavigate();
 
-  //Accepts an array of tickets
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await axios.get("http://localhost:5002/api/tickets");
+        const response = await axios.get("http://localhost:5002/api/owner-tickets");
         setTickets(response.data);
       } catch (error) {
         console.error("Error fetching tickets:", error);
@@ -53,82 +20,99 @@ const OwnerTickets = () => {
     fetchTickets();
   }, []);
 
-  const updateTicket = async (ticketId, newStatus) => {
+  const updateTicketStatus = async (ticketId, newStatus) => {
     try {
-      const response = await axios.put(`http://localhost:5002/api/tickets/${ticketId}`, {
+      await axios.put("http://localhost:5002/api/tickets/update-status", {
+        ticketId,
         status: newStatus,
       });
-  
-      // Update local state with new status
+
       setTickets((prevTickets) =>
         prevTickets.map((ticket) =>
-          ticket.id === ticketId ? { ...ticket, status: newStatus } : ticket
+          ticket.TicketID === ticketId ? { ...ticket, Status: newStatus } : ticket
         )
       );
+
+      if (newStatus === "Completed") {
+        navigate("/owner-home");
+      }
     } catch (error) {
       console.error("Error updating ticket status:", error);
     }
   };
 
-  const renderButtons = (ticket) => {
-    const status = ticket.status.toLowerCase();
-
-    if (status.includes("in process")) {
-      return (
-        <>
-            <button className="complete-button" onClick={() => updateTicket(ticket.id, "Complete")}>Complete</button>
-            <button className="transition-button" onClick={() => updateTicket(ticket.id, "Approved")}>Revert</button>
-        </>
-      );
-    }
-
-    if (status.includes("awaiting approval")) {
-      return (
-        <>
-            <button className="transition-button" onClick={() => updateTicket(ticket.id, "Approved")}>Approve</button>
-            <button className="reject-button" onClick={() => updateTicket(ticket.id, "Reject")}>Reject</button>
-        </>
-      );
-    }
-
-    if (status.includes("approved")) {
-      return (
-        <>
-          <button className="transition-button" onClick={() => updateTicket(ticket.id, "In-Process")}>In-Process</button>
-          <button className="transition-button" onClick={() => updateTicket(ticket.id, "Awaiting Approval")}>Awaiting Approval</button>
-        </>
-      );
-    }
-
-    return null;
-  };
-
   return (
-    <div className="master-container">
-      <div className="title-container">Tickets</div>
-
-      {tickets.map((ticket, index) => (
-        <div className="ticket-container" key={ticket.id || index}>
-          <div className="ticket-number">
-            <b>Ticket #{ticket.ticketNumber}</b>
-          </div>
-
-          <div className="ticket-card">
-            <div className="ticket-details">
-              <p><b>Subject: </b>{ticket.subject}</p>
-              <p><b>Tenant: </b>{ticket.tenant}</p>
-              <p><b>Building: </b>{ticket.building}</p>
-              <p><b>Room: </b>{ticket.room}</p>
-              <p><b>Status: </b>{ticket.status}</p>
-              <p><b>Estimated Finished date: </b>{ticket.finishDate}</p>
-            </div>
-
-            <div className="button-container">
-                {renderButtons(ticket)}
-            </div>
-          </div>
-        </div>
-      ))}
+    <div className="owner-tickets-container">
+      <h2 className="title">Maintenance Tickets</h2>
+      <table className="tickets-table">
+        <thead>
+          <tr>
+            <th>Topic</th>
+            <th>Description</th>
+            <th>Tenant</th>
+            <th>Building</th>
+            <th>Room</th>
+            <th>Assigned To</th>
+            <th>Status</th>
+            <th>Date Created</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tickets.map((ticket) => (
+            <tr key={ticket.TicketID}>
+              <td>{ticket.Topic}</td>
+              <td>{ticket.Subject}</td>
+              <td>{ticket.TenantName}</td>
+              <td>{ticket.Building}</td>
+              <td>{ticket.Room}</td>
+              <td>{ticket.AssignedTo}</td>
+              <td>{ticket.Status}</td>
+              <td>{new Date(ticket.DateCreated).toLocaleDateString()}</td>
+              <td>
+                {ticket.Image ? (
+                  <a
+                    href={`http://localhost:5002/uploads/${ticket.Image}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={`http://localhost:5002/uploads/${ticket.Image}`}
+                      alt="Ticket"
+                      style={{ width: "50px", height: "50px", objectFit: "cover", borderRadius: "4px" }}
+                    />
+                  </a>
+                ) : (
+                  "No Image"
+                )}
+              </td>
+              <td>
+                <div className="action-buttons">
+                  <button
+                    className="transition-button"
+                    onClick={() => updateTicketStatus(ticket.TicketID, "In Progress")}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="reject-button"
+                    onClick={() => updateTicketStatus(ticket.TicketID, "Rejected")}
+                  >
+                    Reject
+                  </button>
+                  <button
+                    className="complete-button"
+                    onClick={() => updateTicketStatus(ticket.TicketID, "Completed")}
+                  >
+                    Complete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

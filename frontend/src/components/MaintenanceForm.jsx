@@ -11,26 +11,24 @@ const MaintenanceForm = ({ user }) => {
     assignedTo: ""
   });
 
+  const [image, setImage] = useState(null);
   const [userId, setUserId] = useState(null);
   const [staffList, setStaffList] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  // ✅ Directly set userId from user prop
   useEffect(() => {
     if (user && user.id) {
       setUserId(user.id);
     }
-  }, [user]);  
+  }, [user]);
 
-  // Fetch maintenance staff list
   useEffect(() => {
     const fetchStaff = async () => {
       try {
-        //const token = localStorage.getItem("token");
         const response = await axios.get("http://localhost:5002/api/maintenanceStaff");
-        setStaffList(response.data); // Assume it's an array like [{id, name}]
+        setStaffList(response.data);
       } catch (err) {
         console.error("Error fetching maintenance staff:", err);
       }
@@ -38,34 +36,39 @@ const MaintenanceForm = ({ user }) => {
     fetchStaff();
   }, []);
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    if(!userId){
+    if (!userId) {
       setError("User ID not loaded");
       return;
     }
 
     try {
-      //const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5002/api/submitTicket", {
-        topic: formData.topic,
-        urgency: formData.urgency,
-        description: formData.description,
-        assignedTo: formData.assignedTo,
-        createdBy: userId
+      const form = new FormData();
+      form.append("topic", formData.topic);
+      form.append("urgency", formData.urgency);
+      form.append("description", formData.description);
+      form.append("assignedTo", formData.assignedTo);
+      form.append("createdBy", userId);
+      if (image) {
+        form.append("image", image);
+      }
+
+      await axios.post("http://localhost:5002/api/submitTicket", form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       setSuccess("Ticket submitted successfully!");
-      setTimeout(() => navigate("/tenantHome"), 1500);
+      setTimeout(() => navigate("/tenant-home"), 1500);
     } catch (err) {
       setError(err.response?.data?.error || "Ticket failed to submit");
     }
@@ -133,6 +136,15 @@ const MaintenanceForm = ({ user }) => {
               </option>
             ))}
           </select>
+        </div>
+
+        <div className="form-row">
+          <div className="row-title">Attach Image:</div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+          />
         </div>
 
         <button type="submit">Submit Ticket</button>
