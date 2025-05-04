@@ -67,8 +67,16 @@ const TenantHome = ({ user }) => {
       <div className="right-column">
         <div className="rent-box">
           <div className="rent-header">Rent Due</div>
-          <p className="rent-amount">{rent?.amount ? `$${rent.amount}` : "$0"}</p>
-          <p className="rent-date">{rent?.dueDate || "N/A"}</p>
+          <p className="rent-amount">
+            {rent?.amount !== undefined
+              ? `$${parseFloat(rent.amount).toFixed(2)}`
+              : "$0.00"}
+          </p>
+          <p className="rent-date">
+            {rent?.dueDate
+              ? `Due by: ${new Date(rent.dueDate).toLocaleDateString()}`
+              : "N/A"}
+          </p>
         </div>
 
         {/* MAINTENANCE TICKETS */}
@@ -138,10 +146,14 @@ const TenantHome = ({ user }) => {
       {/* SUPPORT SECTION */}
       <div className="support-section">
         <div className="support-text">
-          For any questions or issues<br />
-          about the Maple Grove<br />
-          Apartments AMS software,<br />
-          please contact <span>AMS@gmail.com</span><br />
+          For any questions or issues
+          <br />
+          about the Maple Grove
+          <br />
+          Apartments AMS software,
+          <br />
+          please contact <span>AMS@gmail.com</span>
+          <br />
           for support
         </div>
       </div>
