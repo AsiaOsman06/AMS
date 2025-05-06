@@ -46,7 +46,7 @@ const TenantNavBar = ({ user, setUser, setUserRole }) => {
           <button
             onClick={handleLogout}
             className="tenant-logout-btn"
-            style={{ background: "none", border: "none", cursor: "pointer" }}
+            style={{ background: "red", border: "none", cursor: "pointer" }}
           >
             Logout
           </button>

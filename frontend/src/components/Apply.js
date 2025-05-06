@@ -133,8 +133,8 @@ const Register = () => {
                 onChange={handleChange}
                 className="register-input"
               >
-                <option value="Building 1">Building 1</option>
-                <option value="Building 2">Building 2</option>
+                <option value="#L3E">#L3E</option>
+                <option value="#Y2C">#Y2C</option>
               </select>
             </div>
             <div style={{ flex: 1 }}>
@@ -145,9 +145,9 @@ const Register = () => {
                 onChange={handleChange}
                 className="register-input"
               >
-                <option value="Room 145">Room 145</option>
-                <option value="Room 203">Room 203</option>
-                <option value="Room 302">Room 302</option>
+                <option value="Room 101">Room 101</option>
+                <option value="Room 102">Room 102</option>
+                <option value="Room 103">Room 103</option>
               </select>
             </div>
           </div>
@@ -199,4 +199,3 @@ const Register = () => {
 };
 
 export default Register;
- 

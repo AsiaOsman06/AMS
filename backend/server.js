@@ -8,8 +8,7 @@ const bcrypt = require("bcryptjs");
 const tenantRoutes = require("./routes/tenantRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
-const ticketRoutes = require('./routes/tickets');
-
+const ticketRoutes = require("./routes/tickets");
 
 // Load environment variables
 dotenv.config();
@@ -45,8 +44,8 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", tenantRoutes);
-app.use('/api/tickets', ticketRoutes);
-app.use('/api/tickets', require('./routes/tickets'));
+app.use("/api/tickets", ticketRoutes);
+// app.use('/api/tickets', require('./routes/tickets'));
 
 // Dummy data: Maintenance staff list
 const maintenanceStaff = [
@@ -64,7 +63,7 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + "_" + file.originalname;
     cb(null, uniqueName);
-  }
+  },
 });
 
 const upload = multer({ storage: storage });
@@ -135,10 +134,9 @@ app.post("/api/login", async (req, res) => {
   }
 
   try {
-    const [rows] = await pool.query(
-      "SELECT * FROM tenants WHERE email = ?",
-      [email]
-    );
+    const [rows] = await pool.query("SELECT * FROM tenants WHERE email = ?", [
+      email,
+    ]);
 
     if (rows.length === 0) {
       return res.status(401).json({ error: "Invalid credentials" });
@@ -174,9 +172,12 @@ app.post("/api/contact", async (req, res) => {
   }
 
   try {
-    const query = "INSERT INTO contact_form (name, email, topic, message) VALUES (?, ?, ?, ?)";
+    const query =
+      "INSERT INTO contact_form (name, email, topic, message) VALUES (?, ?, ?, ?)";
     await pool.query(query, [name, email, topic, message]);
-    res.status(201).json({ success: "Your message has been submitted successfully" });
+    res
+      .status(201)
+      .json({ success: "Your message has been submitted successfully" });
   } catch (error) {
     console.error("Error inserting contact form data:", error);
     res.status(500).json({ error: "Server error. Please try again later." });
@@ -196,7 +197,15 @@ app.post("/api/applications", async (req, res) => {
     accommodations,
   } = req.body;
 
-  if (!firstName || !lastName || !email || !building || !room || !creditScore || !licenseNumber) {
+  if (
+    !firstName ||
+    !lastName ||
+    !email ||
+    !building ||
+    !room ||
+    !creditScore ||
+    !licenseNumber
+  ) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -247,8 +256,8 @@ app.post("/api/submitTicket", upload.single("image"), async (req, res) => {
       description,
       assignedTo,
       createdBy,
-      'Pending',
-      image
+      "Pending",
+      image,
     ]);
 
     res.status(201).json({ message: "Ticket submitted successfully" });
@@ -261,7 +270,9 @@ app.post("/api/submitTicket", upload.single("image"), async (req, res) => {
 // GET announcements
 app.get("/api/announcements", async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM announcements ORDER BY date DESC");
+    const [rows] = await pool.query(
+      "SELECT * FROM announcements ORDER BY date DESC"
+    );
     res.json(rows);
   } catch (err) {
     console.error("Failed to fetch announcements:", err);
@@ -277,7 +288,9 @@ app.post("/api/announcements", async (req, res) => {
   }
 
   try {
-    await pool.query("INSERT INTO announcements (message) VALUES (?)", [message]);
+    await pool.query("INSERT INTO announcements (message) VALUES (?)", [
+      message,
+    ]);
     res.status(201).json({ message: "Announcement posted successfully" });
   } catch (err) {
     console.error("Failed to post announcement:", err);
@@ -305,7 +318,7 @@ app.get("/api/tickets/:tenantId", async (req, res) => {
 });
 
 //fetching all the tickets that are not completed to display to the Owner.
-app.get('/api/owner-tickets', async (req, res) => {
+app.get("/api/owner-tickets", async (req, res) => {
   try {
     const [rows] = await pool.execute(`
       SELECT 
@@ -331,6 +344,129 @@ WHERE
     res.json(rows);
   } catch (err) {
     console.error("Error fetching tickets for owner:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/api/rooms", async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      "SELECT * FROM RentalUnitRoom WHERE availabilityStatus = 'available'"
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching rooms:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.get("/api/room-details/:roomNumber", async (req, res) => {
+  const roomNumber = req.params.roomNumber;
+
+  try {
+    const [rows] = await pool.query(
+      `SELECT apartmentID, squareFeet, minRent, maxRent, availabilityDate
+       FROM RoomAvailability
+       WHERE roomNumber = ?`,
+      [roomNumber]
+    );
+
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching room availability:", error);
+    res.status(500).json({ error: "Failed to fetch room availability" });
+  }
+});
+
+// ✅ POST /api/pay-rent
+app.post("/api/pay-rent", async (req, res) => {
+  const { amount, password, tenantId } = req.body;
+
+  if (!amount || !password || !tenantId) {
+    return res
+      .status(400)
+      .json({ error: "Amount, password, and tenant ID are required" });
+  }
+
+  try {
+    // Fetch tenant
+    const [userRows] = await pool.query("SELECT * FROM tenants WHERE id = ?", [
+      tenantId,
+    ]);
+    const user = userRows[0];
+
+    if (!user) {
+      return res.status(404).json({ error: "Tenant not found" });
+    }
+
+    // Verify password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid password" });
+    }
+
+    // Fetch current due rent
+    const [rentRows] = await pool.query(
+      "SELECT rentAmount FROM ExistingTenant WHERE id = ?",
+      [tenantId]
+    );
+
+    const rentDue = rentRows[0]?.rentAmount;
+    if (!rentDue) {
+      return res.status(400).json({ error: "Rent not found for tenant" });
+    }
+
+    // ✅ Enforce exact amount only
+    if (parseFloat(amount) !== parseFloat(rentDue)) {
+      return res
+        .status(400)
+        .json({ error: `You must pay the full amount: $${rentDue}` });
+    }
+
+    // Mark as paid
+    await pool.query(
+      "UPDATE ExistingTenant SET rentAmount = 0, paymentStatus = 'Paid' WHERE id = ?",
+      [tenantId]
+    );
+
+    await pool.query(
+      "INSERT INTO PaymentHistory (tenantId, amount, date) VALUES (?, ?, NOW())",
+      [tenantId, amount]
+    );
+
+    res.json({ message: "Payment successful!" });
+  } catch (error) {
+    console.error("Payment error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.get("/api/get-payment-info/:tenantId", async (req, res) => {
+  const { tenantId } = req.params;
+
+  try {
+    const [rows] = await pool.query(
+      "SELECT rentAmount, leaseEndDate AS dueDate FROM ExistingTenant WHERE id = ?",
+      [tenantId]
+    );
+
+    const [history] = await pool.query(
+      "SELECT amount, date FROM PaymentHistory WHERE tenantId = ? ORDER BY date DESC LIMIT 5",
+      [tenantId]
+    );
+
+    const formattedHistory = history.map((entry) => ({
+      amount: `$${entry.amount}`,
+      date: new Date(entry.date).toISOString().split("T")[0],
+    }));
+
+    res.json({
+      dueAmount: rows[0]?.rentAmount || "0",
+      dueDate: rows[0]?.dueDate || "N/A",
+      history: formattedHistory,
+    });
+  } catch (err) {
+    console.error("Failed to fetch payment info:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });

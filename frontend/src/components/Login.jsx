@@ -12,28 +12,31 @@ const Login = ({ setUser, setUserRole }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5002/api/auth/login", {
-        email,
-        password,
-      });
-      
+      const response = await axios.post(
+        "http://localhost:5002/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
+
       console.log("Login response:", response.data);
-  
+
       const { user } = response.data;
-  
+
       if (!user) {
         throw new Error("No user received");
       }
-  
-      setUser(user);  // ✅ store user in app state
-      setUserRole(user.id === 1 ? "owner" : "tenant");  // ✅ based on id
-      navigate(user.id === 1 ? "/owner-home" : "/tenant-home");  // ✅ redirect
-  
+
+      localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
+      setUserRole(user.id === 1 ? "owner" : "tenant");
+      navigate(user.id === 1 ? "/owner-home" : "/tenant-home");
     } catch (error) {
       console.error("Login error:", error);
       setError("Invalid credentials. Please try again.");
     }
-  };  
+  };
 
   return (
     <div className="login-container">

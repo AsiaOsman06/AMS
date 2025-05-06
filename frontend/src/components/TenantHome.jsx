@@ -65,7 +65,7 @@ const TenantHome = ({ user }) => {
 
       {/* RIGHT SIDE */}
       <div className="right-column">
-        <div className="rent-box">
+        {/* <div className="rent-box">
           <div className="rent-header">Rent Due</div>
           <p className="rent-amount">
             {rent?.amount !== undefined
@@ -77,7 +77,7 @@ const TenantHome = ({ user }) => {
               ? `Due by: ${new Date(rent.dueDate).toLocaleDateString()}`
               : "N/A"}
           </p>
-        </div>
+        </div> */}
 
         {/* MAINTENANCE TICKETS */}
         <div className="tickets-box">

@@ -94,13 +94,13 @@ const OwnerHome = () => {
 
       {/* MIDDLE SECTION */}
       <div className="middle-section">
-        <div className="middle-container">
-          <div className="income-box">
+        {/* <div className="middle-container"> */}
+          {/* <div className="income-box">
             <div className="income-header">Expected Income</div>
             <div className="income-amount">{expectedIncome || "—"}</div>
             <div className="income-date">{incomeDate || "--/--"}</div>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
 
       {/* RIGHT SECTION */}

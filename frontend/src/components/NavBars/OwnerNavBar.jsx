@@ -33,21 +33,21 @@ const OwnerNavBar = ({ user, setUser, setUserRole }) => {
           Home
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/rent"
           className={({ isActive }) =>
             isActive ? "nav-btn active" : "nav-btn"
           }
         >
           Rent
-        </NavLink>
+        </NavLink> */}
 
         {/* ✅ Updated logout button */}
         <button
           type="button"
           onClick={handleLogout}
           className="nav-btn logout-btn"
-          style={{ background: "none", border: "none", cursor: "pointer" }}
+          style={{ background: "red", border: "none", cursor: "pointer" }}
         >
           Logout
         </button>
